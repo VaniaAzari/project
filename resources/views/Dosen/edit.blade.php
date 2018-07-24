@@ -1,0 +1,57 @@
+@extends('layouts.layouts2')
+
+@section('content')
+	<section class="content">
+		<div class="row ">
+			<div class="col-12">
+				<form class="form-horizontal" method="POST" action="/dosen/{{ $action }}{{($action!='simpan')? '/'.$dosen['id'] : ''}}">
+					{{ csrf_field() }}
+					<div class="modal-header">
+						<h3>Form {{ ucwords($action) }}</h3>
+					</div>
+					<div class="modal-body">
+						@if($action=="delete")
+							<div class="alert alert-danger">
+	  							<strong>Perhatian!</strong> Menekan tombol delete akan menghapus data.
+							</div>
+						@endif
+						<div class="form-group">
+							<label class="col-sm-4 control-label">NIP</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="username" placeholder="NIP Dosen" value="{{ ($action!='simpan') ? $dosen['username'] : '' }}">
+								<input type="hidden" class="form-control" name="id" value="{{ ($action!='simpan') ? $dosen['id'] : '' }}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Nama Dosen</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" name="nama" placeholder="Nama Dosen" value="{{ ($action!='simpan') ? $dosen['nama'] : '' }}">
+							</div>
+						</div>
+						<div class="form-group">
+                                            <label class="col-sm-4 control-label">Jenis Kelamin</label>
+                                            <div class="col-sm-8">
+                                                <select name="jenis_kelamin" class="form-control">
+                                                    <option value="">Pilih</option>
+                                                    <option value="Laki-laki" <?php if($dosen['jenis_kelamin'] == 'Laki-laki'){ echo 'selected'; } ?>>Laki-laki</option> <!-- jika data di database sama dengan value maka akan terselect/terpilih -->
+                                                    <option value="Perempuan" <?php if($dosen['jenis_kelamin'] == 'Perempuan'){ echo 'selected'; } ?>>Perempuan</option> <!-- jika data di database sama dengan value maka akan terselect/terpilih -->
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Password</label>
+							<div class="col-sm-8">
+									<input type="password" class="form-control" name="password" placeholder="Password" value="{{ ($action!='simpan') ? $dosen['password'] : '' }}">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-default" url="/dosen">Cancel</button>
+						<button type="submit" class="btn {{($action!='delete')? 'btn-success' : 'btn-danger' }} pull-right" >{{ ucwords($action) }}</button>
+					</div>
+				</form>
+			</div>
+		</div>	
+	</section>
+@endsection
