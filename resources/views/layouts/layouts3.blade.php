@@ -97,8 +97,9 @@ staffid : "991234"
                             <li><a href="{{ URL::to('/homedosen') }}">Home</a></li>
                              <li><a href="{{ URL::to('/pengumuman') }}">Pengumuman</a></li>
                            <!--  <li><a href="{{ URL::to('/jadwal') }}">Jadwal</a></li> -->
-                            <li><a href="{{ URL::to('/materi') }}">Materi</a></li>
-                            <li><a href="{{ URL::to('/tugas') }}">Tugas</a></li>
+                            <li><a href="{{ URL::to('/bahanajardosen') }}">Bahan Ajar</a></li>
+                            <!-- <li><a href="{{ URL::to('/materi') }}">Materi</a></li> -->
+                            <li><a href="{{ URL::to('/bahanajartugasdosen') }}">Tugas</a></li>
                             <li><a href="{{ URL::to('/kuis') }}">Kuis</a></li>
                                                      
 

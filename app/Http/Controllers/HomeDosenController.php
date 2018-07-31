@@ -7,6 +7,7 @@ use App\Dosen;
 use App\Materi;
 use App\Tugas;
 use App\Pengumuman;
+use Auth;
 
 class HomeDosenController extends Controller
 {
@@ -14,10 +15,11 @@ class HomeDosenController extends Controller
     {
         $dosen = Dosen::all();
         $dosen = Dosen::paginate(5);
-        $hitungmateri = Materi::count();
-        $hitungtugas = Tugas::count();
+        $hitungmateri = Materi::where('user_id', Auth::guard('dosen')->user()->id)->count();
+        $hitungtugas = Tugas::where('user_id', Auth::guard('dosen')->user()->id)->count();
         $pengumuman = Pengumuman::all();
-        $hitungpengumuman = Pengumuman::count();
+        $hitungpengumuman = Pengumuman::where('user_id', Auth::guard('dosen')->user()->id)->count();
+        
 
         return view('homedosen.indexdosen',['dosen'=>$dosen,'hitungtugas'=>$hitungtugas,'hitungmateri'=>$hitungmateri,
             'pengumuman'=>$pengumuman,'hitungpengumuman'=>$hitungpengumuman]);    

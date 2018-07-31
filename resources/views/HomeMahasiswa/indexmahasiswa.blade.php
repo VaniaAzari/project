@@ -15,7 +15,7 @@
                     <div class="dashboard-div-wrapper bk-clr-two" style="height: 134px;width: 230px;">
                          <div class="dashboard-div-wrapper bk-clr-three" style=" height: 84px; width: 211px;"> 
                         <h1><b>{{ $hitungmatakuliah }}</b></h1></div>
-                        <h5> <font color="#fffff">Matakuliah</font> </h5>
+                        <h5> <font color="#fffff">Bahan Ajar</font> </h5>
                     
                     </div>
                 </div>
@@ -23,7 +23,7 @@
                    <div class="dashboard-div-wrapper bk-clr-two" style="height: 134px;width: 230px;">
                          <div class="dashboard-div-wrapper bk-clr-three" style=" height: 84px; width: 211px;"> 
                         <h1><b>{{ $hitungmateri }}</b></h1></div>
-                         <h5> <font color="#fffff">Bahan Ajar</font> </h5>
+                         <h5> <font color="#fffff">Materi</font> </h5>
                     </div>
                 </div>
                  <div class="col-md-3 col-sm-3 col-xs-6">
@@ -51,10 +51,9 @@
                             <div class="panel-body">
                                 @foreach($pengumuman as $key => $value)
                                    <span class="glyphicon glyphicon-comment  text-warning" ></span>
-                                    <b>{{ $value->judul }}</b>
-                                    <h5><b>{!! $value->created_at !!}</b></h5>
-                                    <p>{!! $value->isi !!}</p>
-                                    
+                                   <b>{{ $value->judul }}</b>
+                                    <h5>{!! $value->created_at->format('d/M/Y') !!}</h5>
+                                    <h5>{!! $value->isi !!}</h5>
 
                                 @endforeach 
                                

@@ -26,9 +26,10 @@
 					
 					<td>
 						<span class="btn btn-group">
-							<a href="/tugas/detail/{{$value['id']}}" class="btn btn-sm btn-info" ><i class="fa fa-edit"></i>&nbsp;Detail</a>
-							<a href="/tugas/edit/{{$value['id']}}" class="btn btn-sm btn-warning" ><i class="fa fa-edit"></i>&nbsp;Ubah</a>
-							<a href="/tugas/show/{{$value['id']}}" class="btn btn-sm btn-danger" ><i class="fa fa-trash"></i>&nbsp;Hapus</a>
+							<a href="/tugas/detail/{{$value['id']}}/{{$value['id_matkul']}}/{{$value['id_kelas']}}/{{$value['tanggal_masuk']}}" 
+							class="btn btn-sm btn-info" ><i class="fa fa-edit"></i>&nbsp;Detail</a>
+							<a href="/tugas/edit/{{$value['id']}}/{{$value['id_matkul']}}/{{$value['id_kelas']}}" class="btn btn-sm btn-warning" ><i class="fa fa-edit"></i>&nbsp;Ubah</a>
+							<a href="/tugas/show/{{$value['id']}}/{{$value['id_matkul']}}/{{$value['id_kelas']}}" class="btn btn-sm btn-danger" ><i class="fa fa-trash"></i>&nbsp;Hapus</a>
 						</span>
 					</td>
 				</tr>
@@ -43,5 +44,5 @@
 			
 		</tfoot>
 	</table>
-	{!! $tugas->render() !!}
+
 </div>	

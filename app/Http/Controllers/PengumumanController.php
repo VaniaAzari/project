@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pengumuman;
+use Auth;
+
 
 class PengumumanController extends Controller
 {
      public function index()
     {
-         $pengumuman = Pengumuman::all();
-         $pengumuman = Pengumuman::paginate(5);
-        return view('pengumuman.index',['pengumuman'=>$pengumuman]);    }
+         $pengumuman = Pengumuman::where('user_id', Auth::guard('dosen')->user()->id)->get();
+            return view('pengumuman.index',['pengumuman'=>$pengumuman]);    }
 
     /**
      * Show the form for creating a new resource.
@@ -34,6 +35,7 @@ class PengumumanController extends Controller
         $pengumuman = new Pengumuman;
         $pengumuman->judul= $request->judul;
         $pengumuman->isi= $request->isi;
+        $pengumuman->user_id= Auth::guard('dosen')->id(); 
         $pengumuman->save();
         
         return redirect('/pengumuman');

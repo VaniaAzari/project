@@ -4,7 +4,7 @@
 	<section class="content">
 		<div class="row ">
 			<div class="col-12">
-				<form class="form-horizontal" method="POST" action="/tugas/{{ $action }}{{($action!='simpan')? '/'.$tugas['id'] : ''}}">
+				<form class="form-horizontal" method="POST" action="/tugas/{{ $action }}{{($action!='edit')? '/'.$tugas['id'] : ''}}">
 					{{ csrf_field() }}
 					<div class="modal-header">
 						<h3>Form {{ ucwords($action) }}</h3>
@@ -25,7 +25,7 @@
 
 									@endforeach 
 								</select>
-								<input type="hidden" class="form-control" name="id" value="{{ ($action!='simpan') ? $tugas['id'] : '' }}">
+								<input type="hidden" class="form-control" name="id" value="{{ ($action!='edit') ? $tugas['id'] : '' }}">
 							</div>
 						</div>
 						<div class="form-group">
@@ -46,10 +46,21 @@
 								 <textarea name="konten" style="width: 753px; height: 140px;"><?php echo $tugas['konten'];?></textarea>
 							</div>
 						</div>
-						
+							<div class="form-group">
+							<label class="col-sm-4 control-label">Tanggal masuk</label>
+							<div class="col-sm-8">
+								<input type="date" class="form-control" name="tanggal_masuk" value="{{ ($action!='edit') ? $tugas['tanggal_masuk'] : '' }}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Tanggal akhir</label>
+							<div class="col-sm-8">
+								<input type="date" class="form-control" name="tanggal_akhir" value="{{ ($action!='edit') ? $tugas['tanggal_akhir'] : '' }}">
+							</div>
+						</div>
 						
 					<div class="modal-footer">
-						<button class="btn btn-default" url="/tugas">Cancel</button> 
+						<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
 						<button type="submit" class="btn {{($action!='delete')? 'btn-success' : 'btn-danger' }} pull-right" >{{ ucwords($action) }}</button>
 					</div>
 				</form>

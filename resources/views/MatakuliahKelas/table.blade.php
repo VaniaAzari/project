@@ -4,7 +4,8 @@
 			<tr>
 				<th>No.</th>
 				<th>Nama Matakuliah</th>	
-				<th>Kelas</th>	
+				<th>Kelas</th>
+				<th>Dosen</th>	
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -15,6 +16,9 @@
 					<td>{{ $key+1 }}</td>
 					<td>{{ $value['id_matkul'] }}</td>
 						<td>{{ $value['id_kelas'] }}</td>
+						<td>{{ $value['dosen_id'] }}</td>
+
+						
 					
 					<td>
 						<span class="btn btn-group">

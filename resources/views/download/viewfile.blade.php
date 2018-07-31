@@ -22,8 +22,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body" >
 						@includeif('download.table')
-						{!! $downloads->render() !!}
-				</div>
+						
  			</div>
 		</div>
 	</div>	

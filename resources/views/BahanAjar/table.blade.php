@@ -15,7 +15,7 @@
 					<td>{{ $key+1 }}</td>
 					<td>{{ $value['id_matkul'] }}</td>
 					<td>
-				 	<a href="{{ url('/viewAlldownloadfile') }}">
+				 	<a href="/viewAlldownloadfile/{{$value['id_matkul']}}/{{$value['id_kelas']}}">
 					<button type="button" class="btn btn-info">Open</button></a>									               
 											                 	
 				</td>						                  

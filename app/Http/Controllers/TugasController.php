@@ -6,20 +6,32 @@ use Illuminate\Http\Request;
 use App\Tugas;
 use App\Kelas;
 use App\Matakuliah;
+use App\TugasMhs;
+use Auth;
 
 class TugasController extends Controller
 {
-      public function index()
+      public function index($id_matkul,$id_kelas)
     {
-        $tugas = Tugas::all();
-        $tugas = Tugas::paginate(5);
+        $tugas = Tugas::orderBy('id_matkul','id_kelas')
+        ->where('id_matkul','=',$id_matkul)
+        ->where('id_kelas','=',$id_kelas)
+        ->where('user_id', Auth::guard('dosen')->user()->id)
+        ->get();
+       
         return view('tugas.index',['tugas'=>$tugas]);
     }
-   public function detail($id)
+
+   public function detail($id,$id_matkul,$id_kelas,$tanggal_masuk)
     {
         $tugas = Tugas::find($id);
-      
-        return view('tugas.detail',['action'=>"kirim",'tugas'=>$tugas]);
+        $tugasmahasiswa = TugasMhs::orderBy('tanggal_masuk','matakuliah_id','kelas_id')
+        ->where('tanggal_masuk','=',$tanggal_masuk)
+        ->where('matakuliah_id','=',$id_matkul)
+        ->where('kelas_id','=',$id_kelas)
+        ->get();     
+
+        return view('tugas.detail',['action'=>"update",'tugas'=>$tugas,'tugasmahasiswa'=>$tugasmahasiswa]);
     }
     /**
      * Show the form for creating a new resource.
@@ -45,11 +57,11 @@ class TugasController extends Controller
         $tugas->id_matkul = $request->id_matkul;
         $tugas->id_kelas = $request->id_kelas;
         $tugas->konten = $request->konten;
-        $tugas->file = $request->file;
         $tugas->tanggal_masuk = $request->tanggal_masuk;
         $tugas->tanggal_akhir = $request->tanggal_akhir;
+        $tugas->user_id =  Auth::guard('dosen')->id(); 
         $tugas->save();
-        return redirect('/tugas');
+        return redirect('/bahanajartugasdosen');
     }
 
     /**
@@ -58,7 +70,7 @@ class TugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,$id_matkul,$id_kelas)
     {
         $tugas = Tugas::find($id);
         $item = Matakuliah::all(['id', 'nama_matkul']);
@@ -93,10 +105,10 @@ class TugasController extends Controller
         $tugas->id_matkul = $request->id_matkul;
         $tugas->id_kelas = $request->id_kelas;
         $tugas->konten = $request->konten;
-        $tugas->file = $request->file;
         $tugas->tanggal_masuk = $request->tanggal_masuk;
         $tugas->tanggal_akhir = $request->tanggal_akhir;
-        return redirect('/tugas');
+        $tugas->save();
+        return redirect('/bahanajartugasdosen');
     }
 
     /**
@@ -109,7 +121,7 @@ class TugasController extends Controller
     {
         $tugas = Tugas::find($id);
         $tugas->delete();
-        return redirect('/tugas');
+        return redirect('/bahanajartugasdosen');
     }
 
     public function search(Request $request){

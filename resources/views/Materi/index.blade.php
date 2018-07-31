@@ -7,7 +7,7 @@
 		<div class="col-12">
 			<div class="panel panel-default">
 				<div class="panel-heading text-right">
-					<a href="/materi/create" class="btn btn-sm btn-primary" ><i class="fa fa-plus"></i>&nbsp;Tambah Data</a>
+					<a href="/materi/create/{id_matkul}/{id_kelas}" class="btn btn-sm btn-primary" ><i class="fa fa-plus"></i>&nbsp;Tambah Data</a>
 				</div>
 				<br>
 				<div class="container">

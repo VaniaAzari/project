@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\MatakuliahKelas;
 use App\Matakuliah;
 use App\Kelas;
+use App\Dosen;
 
 
 class MatakuliahKelasController extends Controller
@@ -25,7 +26,8 @@ class MatakuliahKelasController extends Controller
     {
         $matakuliah = Matakuliah::all(['id', 'nama_matkul']);
         $kelas = Kelas::all(['id', 'nama_kelas']);
-        return view('matakuliahkelas.form',['action'=>"simpan",'matakuliah'=>$matakuliah,'kelas'=>$kelas]);
+        $dosen = Dosen::all(['id', 'nama']);
+        return view('matakuliahkelas.form',['action'=>"simpan",'matakuliah'=>$matakuliah,'kelas'=>$kelas,'dosen'=>$dosen]);
     }
 
     /**
@@ -39,6 +41,7 @@ class MatakuliahKelasController extends Controller
         $matakuliahkelas = new MatakuliahKelas;
         $matakuliahkelas->id_matkul = $request->id_matkul;
         $matakuliahkelas->id_kelas = $request->id_kelas;
+        $matakuliahkelas->dosen_id = $request->dosen_id;
         $matakuliahkelas->save();
         return redirect('/matakuliahkelas');
     }
@@ -55,7 +58,8 @@ class MatakuliahKelasController extends Controller
         $matakuliahkelas = MatakuliahKelas::find($id);
         $matakuliah = Matakuliah::all(['id', 'nama_matkul']);
         $kelas = Kelas::all(['id', 'nama_kelas']);
-        return view('matakuliahkelas.edit',['action'=>"delete",'matakuliahkelas'=>$matakuliahkelas,'matakuliah'=>$matakuliah,'kelas'=>$kelas]);
+        $dosen = Dosen::all(['id', 'nama']);
+        return view('matakuliahkelas.edit',['action'=>"delete",'matakuliahkelas'=>$matakuliahkelas,'matakuliah'=>$matakuliah,'kelas'=>$kelas,'dosen'=>$dosen]);
     }
 
     /**
@@ -70,7 +74,9 @@ class MatakuliahKelasController extends Controller
            $matakuliahkelas = MatakuliahKelas::find($id);
            $matakuliah = Matakuliah::all(['id', 'nama_matkul']);
        	   $kelas = Kelas::all(['id', 'nama_kelas']);
-        return view('matakuliahkelas.edit',['action'=>"update",'matakuliahkelas'=>$matakuliahkelas,'matakuliah'=>$matakuliah,'kelas'=>$kelas]);
+           $dosen = Dosen::all(['id', 'nama']);
+
+        return view('matakuliahkelas.edit',['action'=>"update",'matakuliahkelas'=>$matakuliahkelas,'matakuliah'=>$matakuliah,'kelas'=>$kelas,'dosen'=>$dosen]);
     }
 
     /**
@@ -85,6 +91,8 @@ class MatakuliahKelasController extends Controller
         $matakuliahkelas = MatakuliahKelas::find($id);
         $matakuliahkelas->id_matkul = $request->id_matkul;
         $matakuliahkelas->id_kelas = $request->id_kelas;
+        $matakuliahkelas->dosen_id = $request->dosen_id;
+        $matakuliahkelas->save();
         return redirect('/matakuliahkelas');
     }
 

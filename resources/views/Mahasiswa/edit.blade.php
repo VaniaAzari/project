@@ -47,7 +47,7 @@
 								<select name="id_prodi" class="form-control" >
 										<option value="">Pilih Kelas</option>
 									@foreach($prodi as $category)
-   									 <option value="{{ $category->nama_prodi }}"  @if($category->nama_prodi==$mahasiswa->id_prodi) selected='selected' @endif >{{ $category->nam_prodi }}</option>
+   									 <option value="{{ $category->nama_prodi }}"  @if($category->nama_prodi==$mahasiswa->id_prodi) selected='selected' @endif >{{ $category->nama_prodi }}</option>
 
 									@endforeach 
 								</select>
@@ -75,7 +75,7 @@
 						
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-default" url="/mahasiswa">Cancel</button>
+						<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
 						<button type="submit" class="btn {{($action!='delete')? 'btn-success' : 'btn-danger' }} pull-right" >{{ ucwords($action) }}</button>
 					</div>
 				</form>

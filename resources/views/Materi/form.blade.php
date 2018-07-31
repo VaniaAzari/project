@@ -4,7 +4,7 @@
 	<section class="content">
 		<div class="row ">
 			<div class="col-12">
-				<form class="form-horizontal" method="POST" action="/materi/{{ $action }}{{($action!='simpan')? '/'.$materi['id'] : ''}}">
+				<form class="form-horizontal" method="POST" action="/materi/{{ $action }}{{($action!='simpan')? '/'.$materi['id'] : ''}}" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="modal-header">
 						<h3>Form {{ ucwords($action) }}</h3>
@@ -34,6 +34,17 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-sm-4 control-label">Kelas</label>
+							<div class="col-sm-8">
+							<select name="id_kelas" class="form-control" >
+    								  	<option value="">Pilih Kelas</option>
+   									 @foreach($kelas as $value)
+    									 <option>{{$value->nama_kelas}}</option>
+  									  @endforeach
+ 									 </select>
+							</div>
+						</div>
+						<div class="form-group">
 							<label class="col-sm-4 control-label">Konten</label>
 							<div class="col-sm-8">
 								<textarea id="konten" name="konten" style="width: 753px; height: 200px;" value="{{ ($action!='simpan') ? $materi['konten'] : '' }}"></textarea> 
@@ -47,7 +58,7 @@
 						</div>
 						
 					<div class="modal-footer">
-						<button class="btn btn-default" url="/materi">Cancel</button> 
+						<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
 						<button type="submit" class="btn {{($action!='delete')? 'btn-success' : 'btn-danger' }} pull-right" >{{ ucwords($action) }}</button>
 					</div>
 				</form>

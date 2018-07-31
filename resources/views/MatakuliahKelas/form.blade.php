@@ -38,10 +38,21 @@
  									 </select>
 							</div>
 						</div>
+					<div class="form-group">
+							<label class="col-sm-4 control-label">Dosen</label>
+							<div class="col-sm-8">
+    								<select name="dosen_id" class="form-control" >
+    								  	<option value="">Pilih Dosen</option>
+   									 @foreach($dosen as $value)
+    									 <option>{{$value->nama}}</option>
+  									  @endforeach
+ 									 </select>
+							</div>
+						</div>
 						
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-default" url="/matakuliahkelas">Cancel</button>
+						<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
 						<button type="submit" class="btn {{($action!='delete')? 'btn-success' : 'btn-danger' }} pull-right" >{{ ucwords($action) }}</button>
 					</div>
 				</form>

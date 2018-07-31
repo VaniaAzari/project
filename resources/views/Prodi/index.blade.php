@@ -15,7 +15,7 @@
         			  {!! Form::open(['method'=>'GET','url'=>'cariprodi','role'=>'search']) !!}
               			{{ csrf_field() }}
                			 <div class="input-group">
-                			  <input type="text" class="form-control" name="search" placeholder="Search..">
+                			  <input type="text" class="form-control" name="search" placeholder="Search nama prodi..">
                  		   		<span class="input-group-btn">
                       			  <button type="submit" class="btn btn-default">
                            			 <span class="glyphicon glyphicon-search"></span>

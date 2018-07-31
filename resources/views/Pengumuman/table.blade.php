@@ -31,8 +31,8 @@
 			@endif
 		</tbody>
 		<tfoot>
-			
+		
 		</tfoot>
 	</table>
-	{!! $pengumuman->render() !!}
+	
 </div>	

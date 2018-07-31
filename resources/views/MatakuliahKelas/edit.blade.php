@@ -4,7 +4,7 @@
 	<section class="content">
 		<div class="row ">
 			<div class="col-12">
-				<form class="form-horizontal" method="POST" action="/matakuliahkelas/{{ $action }}{{($action!='simpan')? '/'.$matakuliahkelas['id'] : ''}}">
+				<form class="form-horizontal" method="POST" action="/matakuliahkelas/{{ $action }}{{($action!='edit')? '/'.$matakuliahkelas['id'] : ''}}">
 					{{ csrf_field() }}
 					<div class="modal-header">
 						<h3>Form {{ ucwords($action) }}</h3>
@@ -25,7 +25,7 @@
 
 									@endforeach 
 								</select>
-								<input type="hidden" class="form-control" name="id" value="{{ ($action!='simpan') ? $matakuliahkelas['id'] : '' }}">
+								<input type="hidden" class="form-control" name="id" value="{{ ($action!='edit') ? $matakuliahkelas['id'] : '' }}">
 							</div>
 						</div>
 						<div class="form-group">
@@ -40,10 +40,22 @@
 								</select>
 							</div>
 						</div>
-								
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Dosen</label>
+							<div class="col-sm-8">
+									<select name="dosen_id" class="form-control" >
+										<option value="">Pilih Dosen</option>
+									@foreach($dosen as $category)
+   									 <option value="{{ $category->nama }}"  @if($category->nama==$matakuliahkelas->dosen_id) selected='selected' @endif >{{ $category->nama }}</option>
+
+									@endforeach 
+								</select>
+							</div>
+						</div>
+														
 					</div>
 					<div class="modal-footer">
-						<button class="btn btn-default" url="/matakuliahkelas">Cancel</button>
+						<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
 						<button type="submit" class="btn {{($action!='delete')? 'btn-success' : 'btn-danger' }} pull-right" >{{ ucwords($action) }}</button>
 					</div>
 				</form>

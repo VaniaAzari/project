@@ -59,7 +59,7 @@
 					
 						
 					<div class="modal-footer">
-						<button class="btn btn-default" url="/tugas">Cancel</button> 
+						<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
 						<button type="submit" class="btn {{($action!='delete')? 'btn-success' : 'btn-danger' }} pull-right" >{{ ucwords($action) }}</button>
 					</div>
 				</form>

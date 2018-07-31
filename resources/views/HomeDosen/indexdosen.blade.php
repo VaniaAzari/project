@@ -52,8 +52,9 @@
                                 @foreach($pengumuman as $key => $value)
                                    <span class="glyphicon glyphicon-comment  text-warning" ></span>
                                     <b>{{ $value->judul }}</b>
-                                    <h5>{!! $value->created_at !!}</h5>
-                                    <p>{!! $value->isi !!}</p>
+                                    <h5>{!! $value->created_at->format('d/M/Y')!!}</h5>
+                                    <h5>{!! $value->isi !!}</h5>
+                                    
 
 
                                 @endforeach 
