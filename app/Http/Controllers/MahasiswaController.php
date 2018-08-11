@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mahasiswa;
 use App\Prodi;
 use App\Kelas;
+use App\Http\Requests\FormRequestMhsStore;
 
 class MahasiswaController extends Controller
 {
@@ -28,9 +29,9 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        $items = Kelas::all(['id', 'nama_kelas']);
+        $kelas = Kelas::all(['id', 'nama_kelas']);
         $prodi = Prodi::all(['id', 'nama_prodi']);
-        return view('mahasiswa.form',['action'=>"simpan",'items'=>$items,'prodi'=>$prodi]);
+        return view('mahasiswa.form',['action'=>"simpan",'kelas'=>$kelas,'prodi'=>$prodi]);
     }
 
     /**
@@ -39,17 +40,22 @@ class MahasiswaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function simpan(Request $request)
+    public function simpan(FormRequestMhsStore $request)
     {
         $mahasiswa = new Mahasiswa;
         $mahasiswa->username = $request->username;
         $mahasiswa->nama = $request->nama;
         $mahasiswa->jenis_kelamin = $request->jenis_kelamin;
-        $mahasiswa->id_prodi = $request->id_prodi;
-        $mahasiswa->id_kls = $request->id_kls;
+        $mahasiswa->prodi_id = $request->prodi_id;
+        $mahasiswa->kelas_id = $request->kelas_id;
         $mahasiswa->password = $request->password;
+         $file_name = $request->file('file_name');
+        $ext = $file_name->getClientOriginalName();
+        $newName = $ext;
+        $file_name->move('uploads/gambar',$newName);
+        $mahasiswa->file_name = $newName;
         $mahasiswa->save();
-        return redirect('/mahasiswa');
+        return redirect('/mahasiswa')->with(['success' => 'Data mahasiswa berhasil ditambahkan']);
     }
 
     /**
@@ -61,9 +67,9 @@ class MahasiswaController extends Controller
     public function show($id)
     {
         $mahasiswa = Mahasiswa::find($id);
-        $items = Kelas::all(['id', 'nama_kelas']);
+        $kelas = Kelas::all(['id', 'nama_kelas']);
         $prodi = Prodi::all(['id', 'nama_prodi']);
-        return view('mahasiswa.edit',['action'=>"delete",'mahasiswa'=>$mahasiswa,'items'=>$items,'prodi'=>$prodi]);
+        return view('mahasiswa.edit',['action'=>"delete",'mahasiswa'=>$mahasiswa,'kelas'=>$kelas,'prodi'=>$prodi]);
     }
 
     /**
@@ -75,9 +81,9 @@ class MahasiswaController extends Controller
     public function edit($id)
     {
         $mahasiswa = Mahasiswa::find($id);
-        $items = Kelas::all(['id', 'nama_kelas']);
+        $kelas = Kelas::all(['id', 'nama_kelas']);
         $prodi = Prodi::all(['id', 'nama_prodi']);
-        return view('mahasiswa.edit',['action'=>"update",'mahasiswa'=>$mahasiswa,'items'=>$items,'prodi'=>$prodi]);
+        return view('mahasiswa.edit',['action'=>"update",'mahasiswa'=>$mahasiswa,'kelas'=>$kelas,'prodi'=>$prodi]);
     }
 
     /**
@@ -93,9 +99,20 @@ class MahasiswaController extends Controller
         $mahasiswa->username = $request->username;
         $mahasiswa->nama = $request->nama;
         $mahasiswa->jenis_kelamin = $request->jenis_kelamin;
-        $mahasiswa->id_prodi = $request->id_prodi;
-        $mahasiswa->id_kls = $request->id_kls;
+        $mahasiswa->prodi_id = $request->prodi_id;
+        $mahasiswa->kelas_id = $request->kelas_id;
         $mahasiswa->password = $request->password;
+        if (empty($request->file('file_name'))){
+            $mahasiswa->file_name = $mahasiswa->file_name;
+        }
+        else{
+            unlink('uploads/gambar/'.$mahasiswa->file_name); //menghapus file lama
+            $file_name = $request->file('file_name');
+            $ext = $file_name->getClientOriginalName();
+            $newName = $ext;
+            $file_name->move('uploads/gambar',$newName);
+            $mahasiswa->file_name = $newName;
+        }
         $mahasiswa->save();
         return redirect('/mahasiswa');
     }

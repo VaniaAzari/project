@@ -8,25 +8,27 @@
 				<form class="form-horizontal" method="POST" action="/tugasmahasiswa/{{ $action }}{{($action!='detail')? '/'.$tugasmahasiswa['id'] : ''}}" enctype="multipart/form-data">
 					{{ csrf_field() }}
 						 <h4 class="page-head-line">Tugas</h4>
-					<div class="modal-body">
-						<div class="form-group">
-							<h3>{{ $tugasmahasiswa['id_matkul']}}</h3>
-						</div>
-						
-						<div class="form-group">
-							<b> TO : {{ $tugasmahasiswa['id_kelas'] }} </b>
-						</div>
-						
-						<div class="form-group">
-							 {!! $tugasmahasiswa['konten'] !!}
-						</div>
-						@foreach($tugasmahasiswa2 as $value)
-						<div class="form-group">
-							<label class="control-label">File &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  : </label>
-							<span class="glyphicon glyphicon-file  text-warning" ></span><a> &nbsp; {{ $value['file_name']}} </a>
-						</div>
-						@endforeach
-						<div class="modal-footer"> 
+							 <div class="row">
+           						<div class="col-12">
+              						<div class="col-md-12 col-sm-12">
+                        				<div class="panel panel-primary">
+                           					<div class="panel-heading">
+                               					<h3>{{ $tugasmahasiswa->matakuliah->nama_matkul}}</h3>
+                               					<h5>Dosen: {{ $tugasmahasiswa->dosen->nama }} </h5>
+							 					<h6>Kelas: {{ $tugasmahasiswa->kelas->nama_kelas }} </h6>
+                           					</div>
+                          				</div>
+                                        <h5>  {!! $tugasmahasiswa['konten'] !!}</h5>
+                               			@foreach($tugasmahasiswa2 as $value)
+										
+										<label class="control-label">File &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp;  : </label>
+										<span class="glyphicon glyphicon-file  text-warning" ></span><a> &nbsp; {{ $value['file_name']}} </a>
+										
+										@endforeach                                           
+                            	</div>
+                            </div>
+                        </div>
+                   	<div class="modal-footer"> 
 						<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
 					</div>
 				</form>
@@ -34,3 +36,4 @@
 		</div>	
 	</section>
 @endsection
+

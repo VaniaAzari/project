@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Pengumuman;
 use Auth;
+use App\Http\Requests\FormRequestPengumumanStore;
 
 
 class PengumumanController extends Controller
 {
      public function index()
     {
-         $pengumuman = Pengumuman::where('user_id', Auth::guard('dosen')->user()->id)->get();
+         $pengumuman = Pengumuman::where('dosen_id', Auth::guard('dosen')->user()->id)->get();
             return view('pengumuman.index',['pengumuman'=>$pengumuman]);    }
 
     /**
@@ -30,15 +31,14 @@ class PengumumanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function simpan (Request $request)
+    public function simpan (FormRequestPengumumanStore $request)
     {
         $pengumuman = new Pengumuman;
         $pengumuman->judul= $request->judul;
         $pengumuman->isi= $request->isi;
-        $pengumuman->user_id= Auth::guard('dosen')->id(); 
+        $pengumuman->dosen_id= Auth::guard('dosen')->user()->id; 
         $pengumuman->save();
-        
-        return redirect('/pengumuman');
+        return redirect('/pengumuman')->with(['success' => 'Data pengumuman berhasil ditambahkan']);
 
     }
 

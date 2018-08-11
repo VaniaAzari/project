@@ -8,9 +8,8 @@ class pengumuman extends Model
 {
 	protected $table ='pengumuman';
 
-	public function user() 
-		{ 
-			return $this->belongsTo('App\login_dosen'); 
-		} 
-
+	public function dosen()
+    {
+        return $this->belongsTo(Dosen::class);
+    }
 }

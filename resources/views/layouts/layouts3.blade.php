@@ -70,14 +70,15 @@ staffid : "991234"
           <div class="btn-group">
                          <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"> <span class="glyphicon glyphicon-bell" ></span> <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li></li>
+                           <li><a href="#">You have no message</a></li>
                                  </ul>
                                  </div>
                     
                  <div class="btn-group">
                      <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="glyphicon glyphicon-user"></span>&nbsp; {{ Auth::guard('dosen')->user()->nama }} <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="{{url('keluar')}}">Logout</a></li>
+                             <li><a href="{{url('/profiledosen')}}"> <span class="glyphicon glyphicon-user"></span> &nbsp; Profile</a></li>
+                              <li><a href="{{url('/keluar')}}"> <span class="glyphicon glyphicon-log-out"></span> &nbsp; Logout</a></li>
                                  </ul>
                                  </div>
 

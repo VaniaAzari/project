@@ -14,9 +14,9 @@
 				@foreach($matakuliahkelas as $key => $value)
 				<tr>
 					<td>{{ $key+1 }}</td>
-					<td>{{ $value['id_matkul'] }}</td>
-						<td>{{ $value['id_kelas'] }}</td>
-						<td>{{ $value['dosen_id'] }}</td>
+					<td>{{ $value->matakuliah->nama_matkul }}</td>
+					<td>{{ $value->kelas->nama_kelas }}</td>
+					<td>{{ $value->dosen->nama }}</td>
 
 						
 					

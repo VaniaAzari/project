@@ -4,6 +4,13 @@
 	<section class="content">
 		<div class="row ">
 			<div class="col-12">
+				@if($errors->any())
+				<div class="alert alert-danger">
+					@foreach($errors->all() as $err)
+					<li><span>{{ $err }}</span></li>
+					@endforeach
+				</div>
+				@endif
 				<form class="form-horizontal" method="POST" action="/prodi/{{ $action }}{{($action!='simpan')? '/'.$prodi['id'] : ''}}">
 					{{ csrf_field() }}
 					<div class="modal-header">
@@ -22,7 +29,6 @@
 								<input type="hidden" class="form-control" name="id" value="{{ ($action!='simpan') ? $prodi['id'] : '' }}">
 							</div>
 						</div>
-						
 						</div>
 					<div class="modal-footer">
 						<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>

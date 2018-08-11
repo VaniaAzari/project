@@ -5,29 +5,40 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Materi;
 use App\Matakuliah;
+use App\MatakuliahKelas;
 use App\Kelas;
 use Auth;
+use App\Http\Requests\FormRequestMateriStore;
 
 class MateriController extends Controller
 {
-    public function index($id_matkul,$id_kelas)
+    public function index($matakuliah_id,$kelas_id)
     {
-            $materi = Materi::orderBy('id_matkuls','id_kelas')
-            ->where('id_matkuls','=',$id_matkul)
-            ->where('id_kelas','=',$id_kelas)
+            $materi = Materi::orderBy('matakuliah_id','kelas_id')
+            ->where('matakuliah_id','=',$matakuliah_id)
+            ->where('kelas_id','=',$kelas_id)
             ->get();
-            return view('materi.index',['materi'=>$materi]);    }
+
+            $matakuliahkelas = MatakuliahKelas::orderBy('matakuliah_id','kelas_id')
+            ->where('matakuliah_id','=',$matakuliah_id)
+            ->where('kelas_id','=',$kelas_id)
+            ->get();
+            return view('materi.index',['materi'=>$materi,'matakuliahkelas'=>$matakuliahkelas]);    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($matakuliah_id,$kelas_id)
     {
-        $items = Matakuliah::all(['id', 'nama_matkul']);
-        $kelas = Kelas::all(['id', 'nama_kelas']);
-        return view('materi.form',['action'=>"simpan",'items'=>$items,'kelas'=>$kelas]);
+       $matakuliahkelas = MatakuliahKelas::orderBy('matakuliah_id','kelas_id')
+            ->where('matakuliah_id','=',$matakuliah_id)
+            ->where('kelas_id','=',$kelas_id)
+            ->get();
+        // $matakuliah = Matakuliah::all(['id', 'nama_matkul']);
+        // $kelas = Kelas::all(['id', 'nama_kelas']);
+        return view('materi.form',['action'=>"simpan",'matakuliahkelas'=>$matakuliahkelas]);
     }
 
     /**
@@ -36,21 +47,22 @@ class MateriController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function simpan (Request $request)
-    {
+    public function simpan (FormRequestMateriStore $request)
+    { 
+          
         $materi = new Materi;
         $materi->file_title= $request->file_title;
-        $materi->id_matkuls= $request->id_matkuls;
-        $materi->id_kelas= $request->id_kelas;
+        $materi->matakuliah_id= $request->matakuliah_id;
+        $materi->kelas_id= $request->kelas_id;
         $materi->konten = $request->konten;
         $file_name = $request->file('file_name');
         $ext = $file_name->getClientOriginalName();
         $newName = $ext;
         $file_name->move('uploads/file',$newName);
         $materi->file_name = $newName;
-        $materi->user_id = Auth::guard('dosen')->id(); 
+        $materi->dosen_id = Auth::guard('dosen')->user()->id; 
         $materi->save();
-         return redirect('bahanajardosen');
+         return redirect('bahanajardosen')->with(['success' => 'Data materi berhasil ditambahkan']);
 
     }
 
@@ -60,12 +72,10 @@ class MateriController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,$id_matkuls,$id_kelas)
+    public function show($id,$matakuliah_id,$kelas_id)
     {
-        $materi = Materi::find($id);
-        $items = Matakuliah::all(['id', 'nama_matkul']);
-        $kelas = Kelas::all(['id', 'nama_kelas']);
-        return view('materi.edit',['action'=>"delete",'materi'=>$materi,'items'=>$items,'kelas'=>$kelas]);
+        $materi = Materi::find($id);    
+        return view('materi.edit',['action'=>"delete",'materi'=>$materi]);
     }
 
     /**
@@ -76,10 +86,8 @@ class MateriController extends Controller
      */
     public function edit($id)
     {
-          $materi = Materi::find($id);
-          $items = Matakuliah::all(['id', 'nama_matkul']);
-          $kelas = Kelas::all(['id', 'nama_kelas']);
-          return view('materi.edit',['action'=>"update",'materi'=>$materi,'items'=>$items,'kelas'=>$kelas]);
+          $materi = Materi::find($id);        
+          return view('materi.edit',['action'=>"update",'materi'=>$materi]);
     }
 
     /**
@@ -93,9 +101,7 @@ class MateriController extends Controller
     {
        
         $materi = Materi::find($id);
-        $materi->file_title = $request->file_title;
-        $materi->id_matkuls= $request->id_matkuls;
-        $materi->id_kelas= $request->id_kelas;
+        $materi->file_title = $request->file_title;       
         $materi->konten = $request->konten;
       if (empty($request->file('file_name'))){
             $materi->file_name = $materi->file_name;
@@ -126,7 +132,7 @@ class MateriController extends Controller
     }
     public function search(Request $request){
         $cari = $request->get('search');
-        $materi = Materi::where('user_id', Auth::guard('dosen')->user()->id)
+        $materi = Materi::where('dosen_id', Auth::guard('dosen')->user()->id)
         ->where('id_kelas','LIKE','%'.$cari.'%')->paginate(5);
          return view('materi.index',['action'=>"cari",'materi'=>$materi]);
     }

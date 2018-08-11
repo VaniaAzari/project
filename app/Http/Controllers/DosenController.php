@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Dosen;
+use Alert;
+use App\Http\Requests\FormRequestStore;
 
 class DosenController extends Controller
 {
@@ -21,6 +23,7 @@ class DosenController extends Controller
      */
     public function create()
     {
+
         return view('dosen.form',['action'=>"simpan"]);
     }
 
@@ -30,15 +33,22 @@ class DosenController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function simpan(Request $request)
+    public function simpan(FormRequestStore $request)
     {
         $dosen = new Dosen;
         $dosen->username = $request->username;
         $dosen->nama = $request->nama;
         $dosen->jenis_kelamin = $request->jenis_kelamin;
+        $dosen->email = $request->email;
         $dosen->password = $request->password;
+        $file_name = $request->file('file_name');
+        $ext = $file_name->getClientOriginalName();
+        $newName = $ext;
+        $file_name->move('uploads/gambar',$newName);
+        $dosen->file_name = $newName;
         $dosen->save();
-        return redirect('/dosen');
+        return redirect('/dosen')->with(['success' => 'Data dosen berhasil ditambahkan']);
+
     }
 
     /**
@@ -78,7 +88,19 @@ class DosenController extends Controller
         $dosen->username = $request->username;
         $dosen->nama = $request->nama;
         $dosen->jenis_kelamin = $request->jenis_kelamin;
+        $dosen->email = $request->email;
         $dosen->password = $request->password;
+         if (empty($request->file('file_name'))){
+            $dosen->file_name = $dosen->file_name;
+        }
+        else{
+            unlink('uploads/gambar/'.$dosen->file_name); //menghapus file lama
+            $file_name = $request->file('file_name');
+            $ext = $file_name->getClientOriginalName();
+            $newName = $ext;
+            $file_name->move('uploads/gambar',$newName);
+            $dosen->file_name = $newName;
+        }
         $dosen->save();
         return redirect('/dosen');
     }

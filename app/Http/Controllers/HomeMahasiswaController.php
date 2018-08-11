@@ -16,8 +16,8 @@ class HomeMahasiswaController extends Controller
     {
         $mahasiswa = Mahasiswa::all();
         $mahasiswa = Mahasiswa::paginate(5);
-        $hitungmatakuliah = MatakuliahKelas::where('id_kelas', Auth::guard('mahasiswa')->user()->id_kls)->count();
-        $hitungmateri = Materi::where('id_kelas', Auth::guard('mahasiswa')->user()->id_kls)->count();
+        $hitungmatakuliah = MatakuliahKelas::where('kelas_id', Auth::guard('mahasiswa')->user()->kelas_id)->count();
+        $hitungmateri = Materi::where('kelas_id', Auth::guard('mahasiswa')->user()->kelas_id)->count();
         $hitungtugas = TugasMhs::where('mahasiswa_id', Auth::guard('mahasiswa')->user()->id)->count();
         $pengumuman = Pengumuman::all();
         return view('homemahasiswa.indexmahasiswa',['mahasiswa'=>$mahasiswa,'hitungtugas'=>$hitungtugas,'hitungmateri'=>$hitungmateri,

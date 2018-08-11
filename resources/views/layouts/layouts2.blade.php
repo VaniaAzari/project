@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
+
+    
+
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
@@ -14,6 +17,7 @@
   {!!Html::style('assets/css/font-awesome.css')!!}
   {!!Html::style('assets/css/style.css')!!}
 
+
 </head>
 <body>
     <header>
@@ -21,13 +25,13 @@
              <div class="btn-group">
                          <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"> <span class="glyphicon glyphicon-bell" ></span> <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li></li>
+                            <li><a href="#">You have no message</a></li>
                                  </ul>
                                  </div>
                    <div class="btn-group">
                          <button data-toggle="dropdown" class="btn btn-primary dropdown-toggle"><span class="glyphicon glyphicon-user"></span>&nbsp; {{ Auth::guard('admin')->user()->nama }} <span class="caret"></span></button>
                         <ul class="dropdown-menu">
-                            <li><a href="{{url('/keluar')}}">Logout</a></li>
+                            <li><a href="{{url('/keluar')}}"> <span class="glyphicon glyphicon-log-out"></span> &nbsp; Logout</a></li>
                                  </ul>
                                  </div>
                     
@@ -45,9 +49,7 @@
                             <li><a href="{{ URL::to('/admin') }}">Home</a></li>
                             <li><a href="{{ URL::to('/dosen') }}">Dosen</a></li>
                             <li><a href="{{ URL::to('/mahasiswa') }}">Mahasiswa</a></li>
-                             <li><a href="{{ URL::to('/prodi') }}">Prodi</a></li>
-                            <li><a href="{{ URL::to('/kelas') }}">Kelas</a></li>
-                            <li><a href="{{ URL::to('/matakuliah') }}">Matakuliah</a></li>
+                            <li><a href="{{ URL::to('/prodi') }}">Data</a></li>
                             <li><a href="{{ URL::to('/matakuliahkelas') }}">Matakuliah Kelas</a></li>
 
                           
@@ -90,5 +92,6 @@
     <!-- CORE JQUERY SCRIPTS -->
  {!!Html::script('assets/js/jquery-1.11.1.js')!!}
  {!!Html::script('assets/js/bootstrap.js')!!}
+
 </body>
 </html>

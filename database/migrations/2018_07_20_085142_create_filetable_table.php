@@ -16,7 +16,7 @@ class CreateFiletableTable extends Migration
         Schema::create('filetable', function (Blueprint $table) {
             $table->increments('id_materi');
             $table->string('file_title');
-            $table->integer('id_matkul');
+            $table->integer('matakuliah_id');
             $table->text('konten');
             $table->string('file_name');
             $table->timestamps();

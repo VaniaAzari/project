@@ -21,31 +21,8 @@
                                 <input type="text" class="form-control" name="file_title" placeholder="Title" value="{{ ($action!='edit') ? $materi['file_title'] : '' }}">
                                 <input type="hidden" class="form-control" name="id" value="{{ ($action!='edit') ? $materi['id'] : '' }}">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Mata pelajaran</label>
-                            <div class="col-sm-8">
-                              <select name="id_matkuls" class="form-control" >
-                                        <option value="">Pilih Mapel</option>
-                                    @foreach($items as $category)
-                                     <option value="{{ $category->nama_matkul }}"  @if($category->nama_matkul==$materi->id_matkuls) selected='selected' @endif >{{ $category->nama_matkul}}</option>
-
-                                    @endforeach 
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Kelas</label>
-                            <div class="col-sm-8">
-                              <select name="id_kelas" class="form-control" >
-                                        <option value="">Pilih Kelas</option>
-                                    @foreach($kelas as $category)
-                                     <option value="{{ $category->nama_kelas }}"  @if($category->nama_kelas==$materi->id_kelas) selected='selected' @endif >{{ $category->nama_kelas}}</option>
-
-                                    @endforeach 
-                                </select>
-                            </div>
-                        </div>
+                        </div>                      
+                       
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Konten</label>
                             <div class="col-sm-8">

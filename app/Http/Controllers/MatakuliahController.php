@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Matakuliah;
+use App\Http\Requests\FormRequestMatkulStore;
 
 class MatakuliahController extends Controller
 {
@@ -30,12 +31,12 @@ class MatakuliahController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function simpan(Request $request)
+    public function simpan(FormRequestMatkulStore $request)
     {
         $matakuliah = new Matakuliah;
         $matakuliah->nama_matkul = $request->nama_matkul;
         $matakuliah->save();
-        return redirect('/matakuliah');
+        return redirect('/matakuliah')->with(['success' => 'Data matakuliah berhasil ditambahkan']);
     }
 
     /**

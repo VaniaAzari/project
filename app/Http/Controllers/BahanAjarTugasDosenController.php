@@ -10,7 +10,7 @@ class BahanAjarTugasDosenController extends Controller
 {
      public function index()
     {
-        $matakuliah = MatakuliahKelas::where('dosen_id', Auth::guard('dosen')->user()->nama)->get();
+        $matakuliahkelas = MatakuliahKelas::where('dosen_id', Auth::guard('dosen')->user()->id)->get();
                 
-        return view('bahanajartugasdosen.index',['matakuliah'=>$matakuliah]);    }
+        return view('bahanajartugasdosen.index',['matakuliahkelas'=>$matakuliahkelas]);    }
 }

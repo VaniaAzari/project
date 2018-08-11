@@ -7,6 +7,7 @@ use App\MatakuliahKelas;
 use App\Matakuliah;
 use App\Kelas;
 use App\Dosen;
+use App\Http\Requests\FormRequestMtkKlsStore;
 
 
 class MatakuliahKelasController extends Controller
@@ -36,14 +37,14 @@ class MatakuliahKelasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function simpan(Request $request)
+    public function simpan(FormRequestMtkKlsStore $request)
     {
         $matakuliahkelas = new MatakuliahKelas;
-        $matakuliahkelas->id_matkul = $request->id_matkul;
-        $matakuliahkelas->id_kelas = $request->id_kelas;
+        $matakuliahkelas->matakuliah_id = $request->matakuliah_id;
+        $matakuliahkelas->kelas_id = $request->kelas_id;
         $matakuliahkelas->dosen_id = $request->dosen_id;
         $matakuliahkelas->save();
-        return redirect('/matakuliahkelas');
+        return redirect('/matakuliahkelas')->with(['success' => 'Data matakuliah kelas berhasil ditambahkan']);
     }
 
     /**
@@ -89,8 +90,8 @@ class MatakuliahKelasController extends Controller
     public function update(Request $request, $id)
     {
         $matakuliahkelas = MatakuliahKelas::find($id);
-        $matakuliahkelas->id_matkul = $request->id_matkul;
-        $matakuliahkelas->id_kelas = $request->id_kelas;
+        $matakuliahkelas->matakuliah_id = $request->matakuliah_id;
+        $matakuliahkelas->kelas_id = $request->kelas_id;
         $matakuliahkelas->dosen_id = $request->dosen_id;
         $matakuliahkelas->save();
         return redirect('/matakuliahkelas');

@@ -4,7 +4,7 @@
 	<section class="content">
 		<div class="row ">
 			<div class="col-12">
-				<form class="form-horizontal" method="POST" action="/mahasiswa/{{ $action }}{{($action!='simpan')? '/'.$mahasiswa['id'] : ''}}">
+				<form class="form-horizontal" method="POST" action="/mahasiswa/{{ $action }}{{($action!='simpan')? '/'.$mahasiswa['id'] : ''}}" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="modal-header">
 						<h3>Form {{ ucwords($action) }}</h3>
@@ -44,10 +44,10 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Prodi</label>
 							<div class="col-sm-8">
-								<select name="id_prodi" class="form-control" >
-										<option value="">Pilih Kelas</option>
+								<select name="prodi_id" class="form-control" >
+										<option value="">Pilih Prodi</option>
 									@foreach($prodi as $category)
-   									 <option value="{{ $category->nama_prodi }}"  @if($category->nama_prodi==$mahasiswa->id_prodi) selected='selected' @endif >{{ $category->nama_prodi }}</option>
+   									 <option value="{{ $category->id }}"  @if($category->id==$mahasiswa->prodi_id) selected='selected' @endif >{{ $category->nama_prodi }}</option>
 
 									@endforeach 
 								</select>
@@ -56,10 +56,10 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Kelas</label>
 							<div class="col-sm-8">
-									<select name="id_kls" class="form-control" >
+									<select name="kelas_id" class="form-control" >
 										<option value="">Pilih Kelas</option>
-									@foreach($items as $category)
-   									 <option value="{{ $category->nama_kelas }}"  @if($category->nama_kelas==$mahasiswa->id_kls) selected='selected' @endif >{{ $category->nama_kelas }}</option>
+									@foreach($kelas as $category)
+   									 <option value="{{ $category->id }}"  @if($category->id==$mahasiswa->kelas_id) selected='selected' @endif >{{ $category->nama_kelas }}</option>
 
 									@endforeach 
 								</select>
@@ -72,6 +72,12 @@
 									<input type="password" class="form-control" name="password" placeholder="Password" value="{{ ($action!='simpan') ? $mahasiswa['password'] : '' }}">
 							</div>
 						</div>
+						<div class="form-group">
+                            <label class="col-sm-4 control-label">Foto</label>
+                            <div class="col-sm-8">
+                                <input type="file" class="form-control" name="file_name"  value="{{ ($action!='edit') ? $mahasiswa['file_name'] : '' }}"><?php echo $mahasiswa['file_name'];?>
+                            </div>
+                        </div>
 						
 					</div>
 					<div class="modal-footer">

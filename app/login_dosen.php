@@ -9,14 +9,20 @@ class login_dosen extends Authenticatable
 {
    protected $table = 'dosen';
 
-	public function posts() 
-	{ 
-		return $this->hasMany('App\Pengumuman'); 
-	}
-
-	public function postsmateri() 
-	{ 
-		return $this->hasMany('App\Materi'); 
-	}
-
+public function pengumuman()
+{
+   return $this->hasMany(Pengumuman::class);
+}
+public function matakuliahkelas()
+{
+   return $this->hasMany(MatakuliahKelas::class);
+}
+public function materi()
+{
+   return $this->hasMany(Materi::class);
+}
+public function tugas()
+{
+   return $this->hasMany(Tugas::class);
+}
 }

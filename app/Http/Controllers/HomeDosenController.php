@@ -15,10 +15,10 @@ class HomeDosenController extends Controller
     {
         $dosen = Dosen::all();
         $dosen = Dosen::paginate(5);
-        $hitungmateri = Materi::where('user_id', Auth::guard('dosen')->user()->id)->count();
-        $hitungtugas = Tugas::where('user_id', Auth::guard('dosen')->user()->id)->count();
+        $hitungmateri = Materi::where('dosen_id', Auth::guard('dosen')->user()->id)->count();
+        $hitungtugas = Tugas::where('dosen_id', Auth::guard('dosen')->user()->id)->count();
         $pengumuman = Pengumuman::all();
-        $hitungpengumuman = Pengumuman::where('user_id', Auth::guard('dosen')->user()->id)->count();
+        $hitungpengumuman = Pengumuman::where('dosen_id', Auth::guard('dosen')->user()->id)->count();
         
 
         return view('homedosen.indexdosen',['dosen'=>$dosen,'hitungtugas'=>$hitungtugas,'hitungmateri'=>$hitungmateri,

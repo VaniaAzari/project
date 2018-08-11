@@ -4,6 +4,13 @@
 	<section class="content">
 		<div class="row ">
 			<div class="col-12">
+				@if($errors->any())
+				<div class="alert alert-danger">
+					@foreach($errors->all() as $err)
+					<li><span>{{ $err }}</span></li>
+					@endforeach
+				</div>
+				@endif
 				<form class="form-horizontal" method="POST" action="/materi/{{ $action }}{{($action!='simpan')? '/'.$materi['id'] : ''}}" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="modal-header">
@@ -20,30 +27,13 @@
 							<div class="col-sm-8">
 								<input type="text" class="form-control" name="file_title" placeholder="Title" value="{{ ($action!='simpan') ? $materi['file_title'] : '' }}">
 								<input type="hidden" class="form-control" name="id" value="{{ ($action!='simpan') ? $materi['id'] : '' }}">
+								 @foreach($matakuliahkelas as $value)
+								 @endforeach
+								<input type="hidden" class="form-control" name="matakuliah_id"  value="{{$value['matakuliah_id']}}">
+								<input type="hidden" class="form-control" name="kelas_id"  value="{{$value['kelas_id']}}">
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-4 control-label">Mata pelajaran</label>
-							<div class="col-sm-8">
-							<select name="id_matkuls" class="form-control" >
-    								  	<option value="">Pilih Mata pelajaran</option>
-   									 @foreach($items as $value)
-    									 <option>{{$value->nama_matkul}}</option>
-  									  @endforeach
- 									 </select>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-4 control-label">Kelas</label>
-							<div class="col-sm-8">
-							<select name="id_kelas" class="form-control" >
-    								  	<option value="">Pilih Kelas</option>
-   									 @foreach($kelas as $value)
-    									 <option>{{$value->nama_kelas}}</option>
-  									  @endforeach
- 									 </select>
-							</div>
-						</div>
+								
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Konten</label>
 							<div class="col-sm-8">

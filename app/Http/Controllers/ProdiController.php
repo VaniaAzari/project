@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Prodi;
+use App\Http\Requests\FormRequestProdiStore;
 
 class ProdiController extends Controller
 {
@@ -30,12 +31,12 @@ class ProdiController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function simpan(Request $request)
+    public function simpan(FormRequestProdiStore $request)
     {
         $prodi = new Prodi;
         $prodi->nama_prodi = $request->nama_prodi;
         $prodi->save();
-        return redirect('/prodi');
+        return redirect('/prodi')->with(['success' => 'Data prodi berhasil ditambahkan']);
     }
 
     /**

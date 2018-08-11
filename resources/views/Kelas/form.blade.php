@@ -4,6 +4,13 @@
 	<section class="content">
 		<div class="row ">
 			<div class="col-12">
+				@if($errors->any())
+				<div class="alert alert-danger">
+					@foreach($errors->all() as $err)
+					<li><span>{{ $err }}</span></li>
+					@endforeach
+				</div>
+				@endif
 				<form class="form-horizontal" method="POST" action="/kelas/{{ $action }}{{($action!='simpan')? '/'.$kelas['id'] : ''}}">
 					{{ csrf_field() }}
 					<div class="modal-header">

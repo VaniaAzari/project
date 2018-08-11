@@ -10,11 +10,11 @@ use App\MatakuliahKelas;
 
 class DownloadController extends Controller
 {
-    public function downfunc($id_matkul,$id_kelas){
+    public function downfunc($matakuliah_id,$kelas_id){
 
-   		   $downloads = Materi::orderBy('id_matkuls')
-         ->where('id_matkuls','=',$id_matkul)
-         ->where('id_kelas','=',$id_kelas)
+   		   $downloads = Materi::orderBy('matakuliah_id')
+         ->where('matakuliah_id','=',$matakuliah_id)
+         ->where('kelas_id','=',$kelas_id)
          ->get();
          // return response()->json($downloads);
       	

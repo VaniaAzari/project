@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class upload extends Model
+class ProfilMhs extends Model
 {
-     protected $table ='upload';
+    protected $table = 'mahasiswa';
 }

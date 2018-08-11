@@ -18,10 +18,10 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Nama Matakuliah</label>
 							<div class="col-sm-8">
-								<select name="id_matkul" class="form-control" >
+								<select name="matakuliah_id" class="form-control" >
 										<option value="">Pilih Matakuliah</option>
 									@foreach($matakuliah as $category)
-   									 <option value="{{ $category->nama_matkul }}"  @if($category->nama_matkul==$matakuliahkelas->id_matkul) selected='selected' @endif >{{ $category->nama_matkul }}</option>
+   									 <option value="{{ $category->id }}"  @if($category->id==$matakuliahkelas->matakuliah_id) selected='selected' @endif >{{ $category->nama_matkul }}</option>
 
 									@endforeach 
 								</select>
@@ -31,10 +31,10 @@
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Kelas</label>
 							<div class="col-sm-8">
-									<select name="id_kelas" class="form-control" >
+									<select name="kelas_id" class="form-control" >
 										<option value="">Pilih Kelas</option>
 									@foreach($kelas as $category)
-   									 <option value="{{ $category->nama_kelas }}"  @if($category->nama_kelas==$matakuliahkelas->id_kelas) selected='selected' @endif >{{ $category->nama_kelas }}</option>
+   									 <option value="{{ $category->id }}"  @if($category->id==$matakuliahkelas->kelas_id) selected='selected' @endif >{{ $category->nama_kelas }}</option>
 
 									@endforeach 
 								</select>
@@ -46,7 +46,7 @@
 									<select name="dosen_id" class="form-control" >
 										<option value="">Pilih Dosen</option>
 									@foreach($dosen as $category)
-   									 <option value="{{ $category->nama }}"  @if($category->nama==$matakuliahkelas->dosen_id) selected='selected' @endif >{{ $category->nama }}</option>
+   									 <option value="{{ $category->id }}"  @if($category->id==$matakuliahkelas->dosen_id) selected='selected' @endif >{{ $category->nama }}</option>
 
 									@endforeach 
 								</select>

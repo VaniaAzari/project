@@ -8,6 +8,7 @@
 				<th>Jenis Kelamin</th>	
 				<th>Prodi</th>	
 				<th>Kelas</th>
+				<th>Foto</th>
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -19,8 +20,10 @@
 					<td>{{ $value['username'] }}</td>
 					<td>{{ $value['nama'] }}</td>
 					<td>{{ $value['jenis_kelamin'] }}</td>
-					<td>{{ $value['id_prodi'] }}</td>
-					<td>{{ $value['id_kls'] }}</td>
+					<td>{{ $value->prodi->nama_prodi }}</td>
+					<td>{{ $value->kelas->nama_kelas }}</td>
+					<td style="width:100px"><img src="{{ url('uploads/gambar/'.$value->file_name) }}" alt="" style="width:100%"></td>
+
 					
 					<td>
 						<span class="btn btn-group">

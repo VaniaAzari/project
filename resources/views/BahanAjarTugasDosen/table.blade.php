@@ -11,15 +11,15 @@
 		</thead>
 		<tbody>
 		
-				@foreach($matakuliah as $key => $value)
+				@foreach($matakuliahkelas as $key => $value)
 				<tr>
 					<td>{{ $key+1 }}</td>
-					<td>{{ $value['id_matkul'] }}</td>
-					<td>{{ $value['id_kelas'] }}</td>
+					<td>{{ $value->matakuliah->nama_matkul }}</td>
+					<td>{{ $value->kelas->nama_kelas }}</td>
 					<td>
 				
-				 	<a href="/tugas/{{$value['id_matkul']}}/{{$value['id_kelas']}}">
-					<button type="button" class="btn btn-info">Open</button></a>									               
+				 	<a href="/tugas/{{$value['matakuliah_id']}}/{{$value['kelas_id']}}">
+					<button type="button" class="btn btn-info"><span class="glyphicon glyphicon-open"></span> &nbsp; Open</button></a>									               
 											                 	
 				</td>						                  
 			</tr>

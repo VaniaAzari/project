@@ -6,7 +6,10 @@
 				<th>No.</th>
 				<th>NIP</th>
 				<th>Nama Dosen</th>	
-				<th>Jenis Kelamin</th>	
+				<th>Jenis Kelamin</th>
+				<th>Email</th>
+				<th>Password</th>	
+				<th>Foto</th>	
 				<th>Action</th>
 			</tr>
 		</thead>
@@ -18,6 +21,10 @@
 					<td>{{ $value['username'] }}</td>
 					<td>{{ $value['nama'] }}</td>
 					<td>{{ $value['jenis_kelamin'] }}</td>
+					<td>{{ $value['email'] }}</td>
+					<td>{{ $value['password'] }}</td>
+					 <td style="width:100px"><img src="{{ url('uploads/gambar/'.$value->file_name) }}" alt="" style="width:100%"></td>
+
 					
 					<td>
 						<span class="btn btn-group">

@@ -4,7 +4,15 @@
 	<section class="content">
 		<div class="row ">
 			<div class="col-12">
-				<form class="form-horizontal" method="POST" action="/dosen/{{ $action }}{{($action!='simpan')? '/'.$dosen['id'] : ''}}">
+				@if($errors->any())
+				<div class="alert alert-danger">
+					@foreach($errors->all() as $err)
+					<li><span>{{ $err }}</span></li>
+					@endforeach
+				</div>
+				@endif
+				
+				<form class="form-horizontal" method="POST" action="/dosen/{{ $action }}{{($action!='simpan')? '/'.$dosen['id'] : ''}}" enctype="multipart/form-data">
 					{{ csrf_field() }}
 					<div class="modal-header">
 						<h3>Form {{ ucwords($action) }}</h3>
@@ -38,18 +46,32 @@
                                                 </select>
                                             </div>
                                         </div>
+                        <div class="form-group">
+							<label class="col-sm-4 control-label">Email</label>
+							<div class="col-sm-8">
+									<input type="text" class="form-control" name="email" placeholder="Email" value="{{ ($action!='simpan') ? $dosen['email'] : '' }}">
+							</div>
+						</div>
 						<div class="form-group">
 							<label class="col-sm-4 control-label">Password</label>
 							<div class="col-sm-8">
 									<input type="password" class="form-control" name="password" placeholder="Password" value="{{ ($action!='simpan') ? $dosen['password'] : '' }}">
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-sm-4 control-label">Foto</label>
+							<div class="col-sm-8">
+								<input type="file" class="form-control" name="file_name"  value="{{ ($action!='simpan') ? $dosen['file_name'] : '' }}">
+							</div>
+						</div>
+						
 					</div>
 					<div class="modal-footer">
 						<a href="{{ URL::previous() }}" class="btn btn-default">Back</a>
 						<button type="submit" class="btn {{($action!='delete')? 'btn-success' : 'btn-danger' }} pull-right" >{{ ucwords($action) }}</button>
 					</div>
 				</form>
+
 			</div>
 		</div>	
 	</section>

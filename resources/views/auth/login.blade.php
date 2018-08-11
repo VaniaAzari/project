@@ -9,16 +9,13 @@
             <br><br>
             <h1> Login</h1>
             <hr>
-            @if(\Session::has('alert'))
+            @if($errors->any())
                 <div class="alert alert-danger">
-                    <div>{{Session::get('alert')}}</div>
+                    @foreach($errors->all() as $err)
+                    <li><span>{{ $err }}</span></li>
+                    @endforeach
                 </div>
-            @endif
-            @if(\Session::has('alert-success'))
-                <div class="alert alert-success">
-                    <div>{{Session::get('alert-success')}}</div>
-                </div>
-            @endif
+                @endif
             <form action="{{ url('/kirimdata') }}" method="post">
                 {{ csrf_field() }}
                 <div class="form-group">
@@ -30,7 +27,7 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan password"></input>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-md btn-primary">Login</button>
+                    <button type="submit" class="btn btn-md btn-primary"><span class="glyphicon glyphicon-log-in"></span> &nbsp; Login</button>
                    
                 </div>
             </form>

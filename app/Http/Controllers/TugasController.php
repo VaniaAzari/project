@@ -6,29 +6,36 @@ use Illuminate\Http\Request;
 use App\Tugas;
 use App\Kelas;
 use App\Matakuliah;
+use App\MatakuliahKelas;
 use App\TugasMhs;
 use Auth;
+use App\Http\Requests\FormRequestTugasStore;
 
 class TugasController extends Controller
 {
-      public function index($id_matkul,$id_kelas)
+      public function index($matakuliah_id,$kelas_id)
     {
-        $tugas = Tugas::orderBy('id_matkul','id_kelas')
-        ->where('id_matkul','=',$id_matkul)
-        ->where('id_kelas','=',$id_kelas)
-        ->where('user_id', Auth::guard('dosen')->user()->id)
+        $tugas = Tugas::orderBy('matakuliah_id','kelas_id')
+        ->where('matakuliah_id','=',$matakuliah_id)
+        ->where('kelas_id','=',$kelas_id)
+        ->where('dosen_id', Auth::guard('dosen')->user()->id)
         ->get();
+
+         $matakuliahkelas = MatakuliahKelas::orderBy('matakuliah_id','kelas_id')
+            ->where('matakuliah_id','=',$matakuliah_id)
+            ->where('kelas_id','=',$kelas_id)
+            ->get();
        
-        return view('tugas.index',['tugas'=>$tugas]);
+        return view('tugas.index',['tugas'=>$tugas,'matakuliahkelas'=>$matakuliahkelas]);
     }
 
-   public function detail($id,$id_matkul,$id_kelas,$tanggal_masuk)
+   public function detail($id,$matakuliah_id,$kelas_id,$tanggal_masuk)
     {
         $tugas = Tugas::find($id);
         $tugasmahasiswa = TugasMhs::orderBy('tanggal_masuk','matakuliah_id','kelas_id')
         ->where('tanggal_masuk','=',$tanggal_masuk)
-        ->where('matakuliah_id','=',$id_matkul)
-        ->where('kelas_id','=',$id_kelas)
+        ->where('matakuliah_id','=',$matakuliah_id)
+        ->where('kelas_id','=',$kelas_id)
         ->get();     
 
         return view('tugas.detail',['action'=>"update",'tugas'=>$tugas,'tugasmahasiswa'=>$tugasmahasiswa]);
@@ -38,11 +45,13 @@ class TugasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($matakuliah_id,$kelas_id)
     {
-        $item = Matakuliah::all(['id', 'nama_matkul']);
-        $items = Kelas::all(['id', 'nama_kelas']);
-        return view('tugas.form',['action'=>"simpan",'item'=>$item,'items'=>$items]);
+          $matakuliahkelas = MatakuliahKelas::orderBy('matakuliah_id','kelas_id')
+            ->where('matakuliah_id','=',$matakuliah_id)
+            ->where('kelas_id','=',$kelas_id)
+            ->get();
+        return view('tugas.form',['action'=>"simpan",'matakuliahkelas'=>$matakuliahkelas]);
     }
 
     /**
@@ -51,17 +60,22 @@ class TugasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function simpan(Request $request)
+    public function simpan(FormRequestTugasStore $request)
     {
         $tugas = new Tugas;
-        $tugas->id_matkul = $request->id_matkul;
-        $tugas->id_kelas = $request->id_kelas;
+        $tugas->matakuliah_id = $request->matakuliah_id;
+        $tugas->kelas_id = $request->kelas_id;
         $tugas->konten = $request->konten;
+        $file_name = $request->file('file_name');
+        $ext = $file_name->getClientOriginalName();
+        $newName = $ext;
+        $file_name->move('uploads/tugas',$newName);
+        $tugas->file_name = $newName;
         $tugas->tanggal_masuk = $request->tanggal_masuk;
         $tugas->tanggal_akhir = $request->tanggal_akhir;
-        $tugas->user_id =  Auth::guard('dosen')->id(); 
+        $tugas->dosen_id =  Auth::guard('dosen')->user()->id; 
         $tugas->save();
-        return redirect('/bahanajartugasdosen');
+        return redirect('/bahanajartugasdosen')->with(['success' => 'Data tugas berhasil ditambahkan']);
     }
 
     /**
@@ -70,12 +84,10 @@ class TugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id,$id_matkul,$id_kelas)
+    public function show($id,$matakuliah_id,$kelas_id)
     {
-        $tugas = Tugas::find($id);
-        $item = Matakuliah::all(['id', 'nama_matkul']);
-        $items = Kelas::all(['id', 'nama_kelas']);
-        return view('tugas.edit',['action'=>"delete",'tugas'=>$tugas,'item'=>$item,'items'=>$items]);
+        $tugas = Tugas::find($id);       
+        return view('tugas.edit',['action'=>"delete",'tugas'=>$tugas]);
     }
 
     /**
@@ -86,10 +98,8 @@ class TugasController extends Controller
      */
     public function edit($id)
     {
-        $tugas = Tugas::find($id);
-        $item = Matakuliah::all(['id', 'nama_matkul']);
-        $items = Kelas::all(['id', 'nama_kelas']);
-        return view('tugas.edit',['action'=>"update",'tugas'=>$tugas,'item'=>$item,'items'=>$items]);
+        $tugas = Tugas::find($id);       
+        return view('tugas.edit',['action'=>"update",'tugas'=>$tugas]);
     }
 
     /**
@@ -101,10 +111,19 @@ class TugasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $tugas = Tugas::find($id);
-        $tugas->id_matkul = $request->id_matkul;
-        $tugas->id_kelas = $request->id_kelas;
+        $tugas = Tugas::find($id);       
         $tugas->konten = $request->konten;
+        if (empty($request->file('file_name'))){
+            $tugas->file_name = $tugas->file_name;
+        }
+        else{
+            unlink('uploads/tugas/'.$tugas->file_name); //menghapus file lama
+            $file_name = $request->file('file_name');
+            $ext = $file_name->getClientOriginalName();
+            $newName = $ext;
+            $file_name->move('uploads/tugas',$newName);
+            $tugas->file_name = $newName;
+        }
         $tugas->tanggal_masuk = $request->tanggal_masuk;
         $tugas->tanggal_akhir = $request->tanggal_akhir;
         $tugas->save();
@@ -126,7 +145,7 @@ class TugasController extends Controller
 
     public function search(Request $request){
         $cari = $request->get('search');
-        $tugas = Tugas::where('id_matkul','LIKE','%'.$cari.'%')->paginate(10);
+        $tugas = Tugas::where('matakuliah_id','LIKE','%'.$cari.'%')->paginate(10);
         return view('tugas.index',['action'=>"cari",'tugas'=>$tugas]);
     }
 

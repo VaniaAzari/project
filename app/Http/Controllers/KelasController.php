@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Kelas;
+use App\Http\Requests\FormRequestKelasStore;
 
 class KelasController extends Controller
 {
@@ -30,13 +31,13 @@ class KelasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function simpan(Request $request)
+    public function simpan(FormRequestKelasStore $request)
     {
         
         $kelas = new Kelas;
         $kelas->nama_kelas = $request->nama_kelas;
         $kelas->save();
-        return redirect('/kelas');
+        return redirect('/kelas')->with(['success' => 'Data kelas berhasil ditambahkan']);
     }
 
     /**

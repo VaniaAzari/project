@@ -8,8 +8,22 @@ class matakuliah extends Model
 {
     protected $table ='matakuliah';
 
-    public function postsmateri() 
-	{ 
-		return $this->hasMany('App\Materi'); 
-	}
+public function matakuliahkelas()
+{
+   return $this->hasMany(MatakuliahKelas::class);
+}
+public function materi()
+{
+   return $this->hasMany(Materi::class);
+}
+public function tugas()
+{
+   return $this->hasMany(Tugas::class);
+}
+public function tugasmahasiswa()
+{
+	return $this->hasMany(TugasMhs::class);
+}
+
+
 }

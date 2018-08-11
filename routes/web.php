@@ -36,6 +36,7 @@ Route::get('carikelas', 'KelasController@search');
 Route::get('carimatakuliah', 'MatakuliahController@search');
 Route::get('carimatakuliahkelas', 'MatakuliahKelasController@search');
 
+
 Route::group(['prefix'=>'dosen'],function(){
 	Route::get('/', 'DosenController@index');
 	Route::get('/create', 'DosenController@create');
@@ -102,6 +103,7 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 						Route::get('caritugas', 'TugasController@search');
 						Route::get('bahanajardosen','BahanAjarDosenController@index');
 						Route::get('bahanajartugasdosen','BahanAjarTugasDosenController@index');
+						Route::get('profiledosen', 'ProfilController@profileDosen');
 
 
 						Route::group(['prefix'=>'pengumuman'],function(){
@@ -114,22 +116,22 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 							Route::post('delete/{id}', 'PengumumanController@destroy');
 						});
 						Route::group(['prefix'=>'materi'],function(){
-							Route::get('/{id_matkul}/{id_kelas}', 'MateriController@index');
-							Route::get('/create/{id_matkul}/{id_kelas}', 'MateriController@create');
+							Route::get('/{matakuliah_id}/{kelas_id}', 'MateriController@index');
+							Route::get('/create/{matakuliah_id}/{kelas_id}', 'MateriController@create');
 							Route::post('/simpan', 'MateriController@simpan');
-							Route::get('/edit/{id}/{id_matkul}/{id_kelas}', 'MateriController@edit');
-							Route::get('show/{id}/{id_matkul}/{id_kelas}', 'MateriController@show');
+							Route::get('/edit/{id}/{matakuliah_id}/{kelas_id}', 'MateriController@edit');
+							Route::get('show/{id}/{matakuliah_id}/{kelas_id}', 'MateriController@show');
 							Route::post('update/{id}', 'MateriController@update');
 							Route::post('delete/{id}', 'MateriController@destroy');
 						});
 					
 						Route::group(['prefix'=>'tugas'],function(){
-							Route::get('/{id_matkul}/{id_kelas}', 'TugasController@index');
-							Route::get('/create/{id_matkul}/{id_kelas}', 'TugasController@create');
-							Route::get('/detail/{id}/{id_matkul}/{id_kelas}/{tanggal_masuk}', 'TugasController@detail');
+							Route::get('/{matakuliah_id}/{kelas_id}', 'TugasController@index');
+							Route::get('/create/{matakuliah_id}/{kelas_id}', 'TugasController@create');
+							Route::get('/detail/{id}/{matakuliah_id}/{kelas_id}/{tanggal_masuk}', 'TugasController@detail');
 							Route::post('/simpan', 'TugasController@simpan');
-							Route::get('/edit/{id}/{id_matkul}/{id_kelas}', 'TugasController@edit');
-							Route::get('show/{id}/{id_matkul}/{id_kelas}', 'TugasController@show');
+							Route::get('/edit/{id}/{matakuliah_id}/{kelas_id}', 'TugasController@edit');
+							Route::get('show/{id}/{matakuliah_id}/{kelas_id}', 'TugasController@show');
 							Route::post('update/{id}', 'TugasController@update');
 							Route::post('delete/{id}', 'TugasController@destroy');
 						});
@@ -141,16 +143,17 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 
 															Route::get('/homemahasiswa', 'HomeMahasiswaController@hitungmahasiswa');
 															Route::get('caribahan', 'DownloadController@search');
-															Route::get('viewAlldownloadfile/{id_matkul}/{id_kelas}','DownloadController@downfunc');
+															Route::get('viewAlldownloadfile/{matakuliah_id}/{kelas_id}','DownloadController@downfunc');
 															Route::get('bahanajar','BahanAjarController@index');
 															Route::get('bahanajartugas','BahanAjarTugasController@index');
+															Route::get('profile', 'ProfilController@profileMhs');
 
 															Route::group(['prefix'=>'tugasmahasiswa'],function(){
-																Route::get('/{id_matkul}', 'TugasMahasiswaController@index');
-																Route::get('/detail/{id}/{tanggal_masuk}/{id_matkul}/{id_kelas}', 'TugasMahasiswaController@detail');
+																Route::get('/{matakuliah_id}', 'TugasMahasiswaController@index');
+																Route::get('/detail/{id}/{tanggal_masuk}/{matakuliah_id}/{kelas_id}', 'TugasMahasiswaController@detail');
 																Route::post('/simpan', 'TugasMahasiswaController@simpan');
-																Route::get('/edit/{id}/{id_matkul}', 'TugasMahasiswaController@edit');
-																Route::get('show/{id}/{id_matkul}', 'TugasMahasiswaController@show');
+																Route::get('/edit/{id}/{matakuliah_id}', 'TugasMahasiswaController@edit');
+																Route::get('show/{id}/{matakuliah_id}', 'TugasMahasiswaController@show');
 																Route::post('update/{id}', 'TugasMahasiswaController@update');
 																Route::post('delete/{id}', 'TugasMahasiswaController@destroy');
 

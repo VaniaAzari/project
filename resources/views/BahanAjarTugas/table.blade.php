@@ -4,19 +4,21 @@
 			<tr>
 				<th>No.</th>
 				<th>Bahan Ajar</th>
+				<th>Dosen</th>
 				<th>Action</th>
 			
 			</tr>
 		</thead>
 		<tbody>
 		
-				@foreach($matakuliah as $key => $value)
+				@foreach($matakuliahkelas as $key => $value)
 				<tr>
 					<td>{{ $key+1 }}</td>
-					<td>{{ $value['id_matkul'] }}</td>
+					<td>{{ $value->matakuliah->nama_matkul }}</td>
+					<td>{{ $value->dosen->nama }}</td>
 					<td>
-				 	<a href="/tugasmahasiswa/{{$value['id_matkul']}}">
-					<button type="button" class="btn btn-info">Open</button></a>									               
+				 	<a href="/tugasmahasiswa/{{$value['matakuliah_id']}}">
+					<button type="button" class="btn btn-info"><span class="glyphicon glyphicon-open"></span> &nbsp; Open</button></a>									               
 											                 	
 				</td>						                  
 			</tr>

@@ -51,7 +51,8 @@
                             <div class="panel-body">
                                 @foreach($pengumuman as $key => $value)
                                    <span class="glyphicon glyphicon-comment  text-warning" ></span>
-                                   <b>{{ $value->judul }}</b>
+                                    <b>{{ $value->judul }}</b>
+                                    <h5>{{ $value->dosen->nama }}</h5>
                                     <h5>{!! $value->created_at->format('d/M/Y') !!}</h5>
                                     <h5>{!! $value->isi !!}</h5>
 
