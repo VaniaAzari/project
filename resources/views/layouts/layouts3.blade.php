@@ -101,7 +101,7 @@ staffid : "991234"
                             <li><a href="{{ URL::to('/bahanajardosen') }}">Bahan Ajar</a></li>
                             <!-- <li><a href="{{ URL::to('/materi') }}">Materi</a></li> -->
                             <li><a href="{{ URL::to('/bahanajartugasdosen') }}">Tugas</a></li>
-                            <li><a href="{{ URL::to('/kuis') }}">Kuis</a></li>
+                            <li><a href="{{ route('kuis') }}">Kuis</a></li>
                                                      
 
                         </ul>

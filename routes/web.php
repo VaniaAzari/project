@@ -136,6 +136,11 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 							Route::post('delete/{id}', 'TugasController@destroy');
 						});
 
+						Route::group(['prefix' => 'kuis'], function () {
+							Route::get('/','KuisController@index')->name('kuis');
+
+						});
+
 							
 						});
 
