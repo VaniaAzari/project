@@ -69,6 +69,47 @@
   </div>
 </div>
 
+<div id="editModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Tambah Group Kuis Baru</h4>
+      </div>
+	  <form method="PUT" action="#" id="formEdit">
+		<input type="hidden" value="" id="id_edit" name="id">
+      	<div class="modal-body">
+			{{ csrf_field() }}
+			<div class="form-group">
+				<label>Nama</label>
+				<input id="nama_edit" type="text" class="form-control" name="name" placeholder="Nama Group kuis">
+			</div>
+			<div class="form-group">
+				<select name="id_kelas" class="form-control" id="id_kelas_edit">
+					<option value="" disabled selected>Silakan Pilih Kelas</option>
+					@foreach($kelasList as $kelas)
+						<option value="{{$kelas->id}}">{{$kelas->nama_kelas}}</option>
+					@endforeach
+				</select>
+			</div>
+			<div class="form-group">
+				<select name="id_matakuliah" class="form-control" id="id_matakuliah_edit">
+					<option value="" disabled selected>Silakan Pilih Mata Kuliah</option>
+					@foreach($matkulList as $matkul)
+						<option value="{{$matkul->id}}">{{$matkul->nama_matkul}}</option>
+					@endforeach
+				</select>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-success pull-right btn-update" >Simpan</button>
+		</div>
+	</form>
+    </div>
+  </div>
+</div>
+
 <script>
     $( document ).ready(function() {
 		var dt = $('#dataTable').DataTable({
@@ -114,14 +155,10 @@
                 
             }else if($(this).hasClass('edit')) {
                 $('#id_edit').val(data.id);
-                $('#name_edit').val(data.name);
-                $('#contact_name_edit').val(data.contact_name);
-                $('#contact_email_edit').val(data.contact_email);
-                $('#contact_phone_edit').val(data.contact_phone);
-                $('#modal-edit').modal('show');
-            } else {
-                $('#id_image').val(data.id);
-                $('#modal-edit-image').modal('show');
+                $('#nama_edit').val(data.name);
+                $('#id_kelas_edit').val(data.id_kelas);
+                $('#id_matakuliah_edit').val(data.id_matakuliah);
+                $('#editModal').modal('show');
             }
         });
 		
@@ -145,8 +182,37 @@
 				},
 				error: function(err)
 				{
-					$('#modal-dialog').modal('hide')
-					$('#page-loader').addClass('d-none');
+					$('#addModal').modal('hide')
+					$.smkAlert({
+						text: err.message,
+						type: 'danger'
+					});
+					$('#dataTable').DataTable().ajax.reload();
+				}
+			});
+		});
+		
+		$('.btn-update').click(function() {
+            $.ajax({
+				headers: {
+					'X-CSRF-Token': $('input[name="_token"]').val()
+				},
+				url: "{{ route('kuis.group.update') }}", 
+				type: "PUT",             
+				data: $('#formEdit').serialize(),        
+				success: function(result)  
+				{
+					$('#formEdit')[0].reset();
+					$('#editModal').modal('hide')
+					$.smkAlert({
+						text: result.message,
+						type: 'success'
+					});
+					$('#dataTable').DataTable().ajax.reload();
+				},
+				error: function(err)
+				{
+					$('#editModal').modal('hide')
 					$.smkAlert({
 						text: err.message,
 						type: 'danger'

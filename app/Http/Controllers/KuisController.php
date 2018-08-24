@@ -25,7 +25,7 @@ class KuisController extends Controller
         $groupKuis->name = $request->name;
         $groupKuis->id_kelas = $request->id_kelas;
         $groupKuis->id_matakuliah = $request->id_matakuliah;
-        $groupKuis->Save();
+        $groupKuis->save();
 
         return $groupKuis ? response()->json(['message' => 'Group Kuis Berhasil Di Simpan'], 200)
                           : response()->json(['message' => 'Group Kuis Gagal Di Simpan'], 400);
@@ -49,6 +49,18 @@ class KuisController extends Controller
                         <i class="fa fa-times"></i>
                     </a>';
         })->addIndexColumn()->make(true);
+    }
+
+    public function updateGroup(Request $request)
+    {
+        $groupKuis = GroupKuis::find($request->id);
+        $groupKuis->name = $request->name;
+        $groupKuis->id_kelas = $request->id_kelas;
+        $groupKuis->id_matakuliah = $request->id_matakuliah;
+        $groupKuis->save();
+
+        return $groupKuis ? response()->json(['message' => 'Group Kuis Berhasil Di Update'], 200)
+                          : response()->json(['message' => 'Group Kuis Gagal Di Update'], 400);
     }
 
     public function deleteGroup(Request $request)
