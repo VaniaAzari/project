@@ -7,7 +7,7 @@
 		<div class="col-12">
 			<div class="panel panel-default">
 				<div class="panel-heading text-right">
-                    <a href="/kelas/create" class="btn btn-sm btn-primary" ><i class="fa fa-plus"></i>&nbsp;Tambah Data</a>
+                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addModal"><i class="fa fa-plus"></i>&nbsp;Tambah Data</a>
 				</div>
 				<br>
 							
@@ -15,9 +15,9 @@
 					<table class="table table-bordered">
                         <thead>
                             <th>No</th>
+                            <th>Nama</th>
                             <th>Kelas</th>
                             <th>Mata Kuliah</th>
-                            <th>Soal</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
@@ -29,4 +29,49 @@
 		</div>
 	</div>	
 </section>
+<div id="addModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Tambah Group Kuis Baru</h4>
+      </div>
+	  <form method="POST" action="#">
+      	<div class="modal-body">
+			{{ csrf_field() }}
+			<div class="form-group">
+				<label>Nama</label>
+				<input type="text" class="form-control" name="name" placeholder="Nama Group kuis">
+			</div>
+			<div class="form-group">
+				<select name="id_kelas" class="form-control">
+					<option value="" disabled selected>Silakan Pilih Kelas</option>
+					@foreach($kelasList as $kelas)
+						<option value="{{$kelas->id}}">{{$kelas->nama_kelas}}</option>
+					@endforeach
+				</select>
+			</div>
+			<div class="form-group">
+				<select name="id_matakuliah" class="form-control">
+					<option value="" disabled selected>Silakan Pilih Mata Kuliah</option>
+					@foreach($matkulList as $matkul)
+						<option value="{{$matkul->id}}">{{$matkul->nama_matkul}}</option>
+					@endforeach
+				</select>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="submit" class="btn btn-success pull-right" >Simpan</button>
+		</div>
+	</form>
+    </div>
+  </div>
+</div>
+
+<script>
+    $( document ).ready(function() {
+		console.log('ready');
+	});
+</script>
 @endsection

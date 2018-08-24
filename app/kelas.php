@@ -10,23 +10,28 @@ class kelas extends Model
 
     public function matakuliahkelas()	
     {
-   	return $this->hasMany(MatakuliahKelas::class);	
+   	    return $this->hasMany(MatakuliahKelas::class);	
     }
     public function materi()	
     {
-   	return $this->hasMany(Materi::class);	
+   	    return $this->hasMany(Materi::class);	
     }
    public function mahasiswa()
     {
-   return $this->hasMany(Mahasiswa::class);
+        return $this->hasMany(Mahasiswa::class);
     }
 	 public function tugas()
 	 {
-	return $this->hasMany(Tugas::class);
+	    return $this->hasMany(Tugas::class);
 	 }
     public function tugasmahasiswa()
     {
-    return $this->hasMany(TugasMhs::class);
+        return $this->hasMany(TugasMhs::class);
+    }
+
+    public function groupKuis()
+    {
+        return $this->hasMany(GroupKuis::class);
     }
 
 

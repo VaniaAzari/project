@@ -61,7 +61,8 @@ staffid : "991234"
 }
 });
 </script>
-  
+  {!!Html::script('assets/js/jquery-1.11.1.js')!!}
+ {!!Html::script('assets/js/bootstrap.js')!!}
 
 </head>
 <body>
@@ -101,9 +102,7 @@ staffid : "991234"
                             <li><a href="{{ URL::to('/bahanajardosen') }}">Bahan Ajar</a></li>
                             <!-- <li><a href="{{ URL::to('/materi') }}">Materi</a></li> -->
                             <li><a href="{{ URL::to('/bahanajartugasdosen') }}">Tugas</a></li>
-                            <li><a href="{{ route('kuis') }}">Kuis</a></li>
-                                                     
-
+                            <li><a href="{{ route('kuis.group') }}">Kuis</a></li>
                         </ul>
                     </div>
                 </div>
@@ -141,8 +140,7 @@ staffid : "991234"
     <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY SCRIPTS -->
- {!!Html::script('assets/js/jquery-1.11.1.js')!!}
- {!!Html::script('assets/js/bootstrap.js')!!}
+ 
 
 </body>
 </html>

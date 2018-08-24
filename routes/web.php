@@ -137,7 +137,7 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 						});
 
 						Route::group(['prefix' => 'kuis'], function () {
-							Route::get('/','KuisController@index')->name('kuis');
+							Route::get('/group','KuisController@indexGroup')->name('kuis.group');
 
 						});
 
