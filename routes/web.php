@@ -142,6 +142,9 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 							Route::put('/save/group','KuisController@updateGroup')->name('kuis.group.update');
 							Route::post('/list/group','KuisController@listGroup')->name('kuis.group.list');
 							Route::delete('/delete/group','KuisController@deleteGroup')->name('kuis.group.delete');
+
+							Route::get('/','KuisController@indexKuis')->name('kuis');
+
 						});
 
 							

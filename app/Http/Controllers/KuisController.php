@@ -45,6 +45,9 @@ class KuisController extends Controller
             return '<a href="#" class="btn btn-info btn-icon btn-circle edit">
                         <i class="fa fa-pencil"></i>
                     </a>
+                    <a href="'.route("kuis").'" class="btn btn-info btn-icon btn-circle edit">
+                        <i class="fa fa-pencil"></i>
+                    </a>
                     <a href="#" class="btn btn-danger btn-icon btn-circle delete">
                         <i class="fa fa-times"></i>
                     </a>';
@@ -70,5 +73,10 @@ class KuisController extends Controller
         
         return $kelas ? response()->json(['message' => 'Group Kuis Berhasil Di Hapus'], 200)
                           : response()->json(['message' => 'Group Kuis Gagal Di Hapus'], 400);
+    }
+
+    public function indexKuis()
+    {
+        return view('Kuis.indexkuis');
     }
 }
