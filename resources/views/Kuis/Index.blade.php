@@ -2,7 +2,7 @@
 
 @section('content')
 <section class="content">
-	<h4 class="page-head-line">Kuis</h4>
+	<h4 class="page-head-line">Kuis Group</h4>
 	<div class="row">
 		<div class="col-12">
 			<div class="panel panel-default">

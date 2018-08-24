@@ -15,9 +15,8 @@
 					<table class="table table-bordered">
                         <thead>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Kelas</th>
-                            <th>Mata Kuliah</th>
+                            <th>Soal</th>
+                            <th>Jawaban</th>
                             <th>Action</th>
                         </thead>
                         <tbody>
