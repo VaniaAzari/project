@@ -91,6 +91,39 @@
                 { data: 'action', name: 'action', "width" : "100px" },
             ]
 		});
+
+		$('table#dataTable tbody').on( 'click', 'td>a', function (e) {
+            var mode = $(this).attr("data-mode");
+            var parent = $(this).parent().get( 0 );
+            var parent1 = $(parent).parent().get( 0 );
+            var row = dt.row(parent1);
+            var data = row.data();
+
+            if($(this).hasClass('delete')) {
+                swal({
+                    title: "Konfirmasi",
+                    text: "Apakah Anda Yakin Untuk Menghapus Data Ini ?",
+                    buttons: {
+                        cancel: "Tidak",
+                        execute: "Iya",
+                    }
+                }).then((value) => {
+                    value == 'execute' ? deleteData(data.id, $('input[name="_token"]').val(), "{{ route('kuis.group.delete') }}")
+                    : null
+                });
+                
+            }else if($(this).hasClass('edit')) {
+                $('#id_edit').val(data.id);
+                $('#name_edit').val(data.name);
+                $('#contact_name_edit').val(data.contact_name);
+                $('#contact_email_edit').val(data.contact_email);
+                $('#contact_phone_edit').val(data.contact_phone);
+                $('#modal-edit').modal('show');
+            } else {
+                $('#id_image').val(data.id);
+                $('#modal-edit-image').modal('show');
+            }
+        });
 		
 		$('.btn-save').click(function() {
             $.ajax({
@@ -108,7 +141,7 @@
 						text: result.message,
 						type: 'success'
 					});
-					// $('#dataTable').DataTable().ajax.reload();
+					$('#dataTable').DataTable().ajax.reload();
 				},
 				error: function(err)
 				{
@@ -118,10 +151,38 @@
 						text: err.message,
 						type: 'danger'
 					});
-					// $('#dataTable').DataTable().ajax.reload();
+					$('#dataTable').DataTable().ajax.reload();
 				}
 			});
         });
 	});
+
+	function deleteData(id, token, url) {
+        $.ajax({
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-Token': token
+            },
+            url: url,
+            dataType: 'JSON',
+            cache: false,
+            data: {id: id},
+            success: function(result) {
+                $('#dataTable').DataTable().ajax.reload();
+                $.smkAlert({
+                    text: result.message,
+                    type: 'success'
+                });
+            },
+            error: function(err)
+            {
+                $.smkAlert({
+                    text: err.message,
+                    type: 'danger'
+                });
+            }
+        });
+	}
+	
 </script>
 @endsection

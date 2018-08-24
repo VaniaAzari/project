@@ -50,4 +50,13 @@ class KuisController extends Controller
                     </a>';
         })->addIndexColumn()->make(true);
     }
+
+    public function deleteGroup(Request $request)
+    {
+        $kelas = GroupKuis::find($request->id);
+        $kelas->delete();
+        
+        return $kelas ? response()->json(['message' => 'Group Kuis Berhasil Di Hapus'], 200)
+                          : response()->json(['message' => 'Group Kuis Gagal Di Hapus'], 400);
+    }
 }

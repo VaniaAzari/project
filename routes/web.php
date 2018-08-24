@@ -140,6 +140,7 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 							Route::get('/group','KuisController@indexGroup')->name('kuis.group');
 							Route::post('/save/group','KuisController@saveGroup')->name('kuis.group.save');
 							Route::post('/list/group','KuisController@listGroup')->name('kuis.group.list');
+							Route::delete('/delete/group','KuisController@deleteGroup')->name('kuis.group.delete');
 						});
 
 							
