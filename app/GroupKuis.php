@@ -14,6 +14,11 @@ class GroupKuis extends Model
 
     public function kelas()
     {
-        return $this->belongsTo(kelas::class);
+        return $this->belongsTo('App\kelas','id_kelas');
+    }
+
+    public function matkul()
+    {
+        return $this->belongsTo('App\matakuliah','id_matakuliah');
     }
 }

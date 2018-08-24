@@ -14,6 +14,7 @@
   {!!Html::style('assets/css/font-awesome.css')!!}
   {!!Html::style('assets/css/style.css')!!}
   {!!Html::script('assets/js/tinymce/tiny_mce.js')!!}
+  <link href="{{ asset('assets/css/jquery.dataTables.min.css') }}" rel="stylesheet"/>
   <link href="{{ asset('assets/css/smoke.min.css') }}" rel="stylesheet"/>
 
 <script type="text/javascript">
@@ -63,6 +64,8 @@ staffid : "991234"
 </script>
   {!!Html::script('assets/js/jquery-1.11.1.js')!!}
  {!!Html::script('assets/js/bootstrap.js')!!}
+<script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/smoke.min.js') }}"></script>
 </head>
 <body>

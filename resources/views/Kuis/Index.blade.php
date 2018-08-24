@@ -12,7 +12,7 @@
 				<br>
 							
 				<div class="panel-body" >
-					<table class="table table-bordered">
+					<table class="table table-bordered" id="dataTable">
                         <thead>
                             <th>No</th>
                             <th>Nama</th>
@@ -71,6 +71,27 @@
 
 <script>
     $( document ).ready(function() {
+		var dt = $('#dataTable').DataTable({
+            orderCellsTop: true,
+            responsive: true,
+            processing: true,
+            serverSide: true,
+            searching: true,
+            autoWidth: false,
+            ajax: {
+				url :'{{ route('kuis.group.list') }}',
+				data: { '_token' : '{{csrf_token() }}'},
+				type: 'POST',
+            },
+            columns: [
+                { data: 'DT_Row_Index', orderable: false, searchable: false, "width": "30px"},
+                { data: 'name', name: 'name' },
+                { data: 'kelas', name: 'kelas' },
+                { data: 'matakuliah', name: 'matakuliah' },
+                { data: 'action', name: 'action', "width" : "100px" },
+            ]
+		});
+		
 		$('.btn-save').click(function() {
             $.ajax({
 				headers: {

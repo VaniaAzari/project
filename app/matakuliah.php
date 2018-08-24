@@ -24,6 +24,10 @@ public function tugasmahasiswa()
 {
 	return $this->hasMany(TugasMhs::class);
 }
+public function groupKuis()
+{
+    return $this->hasMany(GroupKuis::class);
+}
 
 
 }
