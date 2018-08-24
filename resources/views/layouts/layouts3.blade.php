@@ -13,8 +13,8 @@
   {!!Html::style('assets/css/bootstrap.css')!!}
   {!!Html::style('assets/css/font-awesome.css')!!}
   {!!Html::style('assets/css/style.css')!!}
-
   {!!Html::script('assets/js/tinymce/tiny_mce.js')!!}
+  <link href="{{ asset('assets/css/smoke.min.css') }}" rel="stylesheet"/>
 
 <script type="text/javascript">
 tinyMCE.init({
@@ -63,7 +63,7 @@ staffid : "991234"
 </script>
   {!!Html::script('assets/js/jquery-1.11.1.js')!!}
  {!!Html::script('assets/js/bootstrap.js')!!}
-
+<script src="{{ asset('assets/js/smoke.min.js') }}"></script>
 </head>
 <body>
     <header>

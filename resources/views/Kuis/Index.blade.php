@@ -36,7 +36,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Tambah Group Kuis Baru</h4>
       </div>
-	  <form method="POST" action="#">
+	  <form method="POST" action="#" id="formAdd">
       	<div class="modal-body">
 			{{ csrf_field() }}
 			<div class="form-group">
@@ -62,7 +62,7 @@
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="submit" class="btn btn-success pull-right" >Simpan</button>
+			<button type="button" class="btn btn-success pull-right btn-save" >Simpan</button>
 		</div>
 	</form>
     </div>
@@ -71,7 +71,36 @@
 
 <script>
     $( document ).ready(function() {
-		console.log('ready');
+		$('.btn-save').click(function() {
+            $.ajax({
+				headers: {
+					'X-CSRF-Token': $('input[name="_token"]').val()
+				},
+				url: "{{ route('kuis.group.save') }}", 
+				type: "POST",             
+				data: $('#formAdd').serialize(),        
+				success: function(result)  
+				{
+					$('#formAdd')[0].reset();
+					$('#addModal').modal('hide')
+					$.smkAlert({
+						text: result.message,
+						type: 'success'
+					});
+					// $('#dataTable').DataTable().ajax.reload();
+				},
+				error: function(err)
+				{
+					$('#modal-dialog').modal('hide')
+					$('#page-loader').addClass('d-none');
+					$.smkAlert({
+						text: err.message,
+						type: 'danger'
+					});
+					// $('#dataTable').DataTable().ajax.reload();
+				}
+			});
+        });
 	});
 </script>
 @endsection
