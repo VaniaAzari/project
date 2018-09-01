@@ -102,26 +102,28 @@ class KuisController extends Controller
                           : response()->json(['message' => 'Kuis Gagal Di Simpan'], 400);
     }
 
-    public function listKuis(Kuis $kuis)
+    public function listKuis(Kuis $kuis, KuisJawaban $kuisJawaban)
     {
         $data = Kuis::get();
         return Datatables::of($data)
         ->addColumn('jawaban', function ($model) {
-            // $ul = '<ul>';
-            // foreach($model->kuisJawaban as $jwbn)
-            // {
-            //     $ul = '<li>'.$jwbn->value.'</li>';
-            // }
-            // $ul ='</ul>';
-            // return $ul;
-            return $model->kuisJawaban;
+            $jwbn = KuisJawaban::where('kuis_id',$model->id)->get();
+            $ab = [];
+            foreach($jwbn as $dt)
+            {
+                if($dt->ket)
+                {
+                    $val = '(Benar)';
+                } else {
+                    $val = ' ';
+                }
+                array_push($ab, $dt->value. ' '.$val);
+            }
+            return $ab;
         })
         ->addColumn('action', function ($model) {
             return '<a href="#" class="btn btn-info btn-icon btn-circle edit">
                         <i class="fa fa-pencil"></i>
-                    </a>
-                    <a href="#" class="btn btn-warning btn-icon btn-circle edit">
-                        <i class="fa fa-newspaper-o"></i>
                     </a>
                     <a href="#" class="btn btn-danger btn-icon btn-circle delete">
                         <i class="fa fa-times"></i>

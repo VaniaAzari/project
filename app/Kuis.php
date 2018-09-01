@@ -16,4 +16,17 @@ class Kuis extends Model
     {
         return $this->hasMany('App\KuisJawaban','kuis_id');
     }
+
+    public function jawabanForDT()
+    {
+        $ul = '<ul>';
+        // $ul = '<li>asda</li>';
+        $kuises = $this->kuisJawaban;
+        foreach($kuises as $data)
+        {
+            $li = '<li>'.$data->value.' '.$data->ket .'</li>';
+        }
+        $endul = '</ul>';
+        return $ul.$li.$endul;
+    }
 }
