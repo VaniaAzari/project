@@ -143,7 +143,10 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 							Route::post('/list/group','KuisController@listGroup')->name('kuis.group.list');
 							Route::delete('/delete/group','KuisController@deleteGroup')->name('kuis.group.delete');
 
-							Route::get('/','KuisController@indexKuis')->name('kuis');
+							Route::get('/{id}','KuisController@indexKuis')->name('kuis');
+							Route::post('/save','KuisController@saveKuis')->name('kuis.save');
+							Route::post('/list','KuisController@listKuis')->name('kuis.list');
+							Route::delete('/delete','KuisController@deleteKuis')->name('kuis.delete');
 
 						});
 
@@ -177,10 +180,14 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 
 Route::get('/login', function () {
     return view('auth.login');
-})->middleware('guest');
+})->middleware('guest')->name('login.page');
 
 Route::post('/kirimdata','login@masuk');
 
 Route::get('/keluar','login@keluar');
+
+Route::get('/', function () {
+	return redirect()->route('login.page');
+});
 	
 

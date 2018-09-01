@@ -12,7 +12,7 @@
 				<br>
 							
 				<div class="panel-body" >
-					<table class="table table-bordered" id="dataTable">
+					<table class="table table-bordered table-striped table-hover" id="dataTable">
                         <thead>
                             <th>No</th>
                             <th>Nama</th>
@@ -125,11 +125,11 @@
 				type: 'POST',
             },
             columns: [
-                { data: 'DT_Row_Index', orderable: false, searchable: false, "width": "30px"},
+                { data: 'DT_Row_Index', orderable: false, searchable: false, "width": "25px"},
                 { data: 'name', name: 'name' },
                 { data: 'kelas', name: 'kelas' },
                 { data: 'matakuliah', name: 'matakuliah' },
-                { data: 'action', name: 'action', "width" : "100px" },
+                { data: 'action', name: 'action', "width" : "130px" },
             ]
 		});
 

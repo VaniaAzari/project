@@ -12,7 +12,7 @@
 				<br>
 							
 				<div class="panel-body" >
-					<table class="table table-bordered">
+					<table class="table table-bordered" id="dataTable">
                         <thead>
                             <th>No</th>
                             <th>Soal</th>
@@ -28,6 +28,80 @@
 		</div>
 	</div>	
 </section>
+<div id="addModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Tambah Kuis Baru</h4>
+      </div>
+	  <form method="POST" action="#" id="formAdd">
+      	<div class="modal-body">
+            {{ csrf_field() }}
+            <input type="hidden" name="group_kuis_id" value="{{$id}}">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="">Soal</label>
+                        <input type="text" name="pertanyaan" class="form-control" placeholder="Masukan Pertanyaan">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="jawaban[][value]" class="form-control" placeholder="Masukan Jawaban">
+                        </div>
+                        <div class="col-md-6">
+                            <select name="status[][ket]" class="form-control">
+                                <option value="false">Salah</option>
+                                <option value="true">Benar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="jawaban[][value]" class="form-control" placeholder="Masukan Jawaban">
+                        </div>
+                        <div class="col-md-6">
+                            <select name="status[][ket]" class="form-control">
+                                <option value="false">Salah</option>
+                                <option value="true">Benar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="jawaban[][value]" class="form-control" placeholder="Masukan Jawaban">
+                        </div>
+                        <div class="col-md-6">
+                            <select name="status[][ket]" class="form-control">
+                                <option value="false">Salah</option>
+                                <option value="true">Benar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="text" name="jawaban[][value]" class="form-control" placeholder="Masukan Jawaban">
+                        </div>
+                        <div class="col-md-6">
+                            <select name="status[][ket]" class="form-control">
+                                <option value="false">Salah</option>
+                                <option value="true">Benar</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-success pull-right btn-save" >Simpan</button>
+		</div>
+	</form>
+    </div>
+  </div>
+</div>
 
 
 <script>
@@ -40,15 +114,14 @@
             searching: true,
             autoWidth: false,
             ajax: {
-				url :'{{ route('kuis.group.list') }}',
+				url :'{{ route('kuis.list') }}',
 				data: { '_token' : '{{csrf_token() }}'},
 				type: 'POST',
             },
             columns: [
                 { data: 'DT_Row_Index', orderable: false, searchable: false, "width": "30px"},
-                { data: 'name', name: 'name' },
-                { data: 'kelas', name: 'kelas' },
-                { data: 'matakuliah', name: 'matakuliah' },
+                { data: 'pertanyaan', name: 'pertanyaan' },
+                { data: 'jawaban', name: 'jawaban' },
                 { data: 'action', name: 'action', "width" : "100px" },
             ]
 		});
@@ -69,7 +142,7 @@
                         execute: "Iya",
                     }
                 }).then((value) => {
-                    value == 'execute' ? deleteData(data.id, $('input[name="_token"]').val(), "{{ route('kuis.group.delete') }}")
+                    value == 'execute' ? deleteData(data.id, $('input[name="_token"]').val(), "{{ route('kuis.delete') }}")
                     : null
                 });
                 
@@ -87,7 +160,7 @@
 				headers: {
 					'X-CSRF-Token': $('input[name="_token"]').val()
 				},
-				url: "{{ route('kuis.group.save') }}", 
+				url: "{{ route('kuis.save') }}", 
 				type: "POST",             
 				data: $('#formAdd').serialize(),        
 				success: function(result)  
