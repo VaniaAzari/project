@@ -9,22 +9,35 @@
 				<br>
 							
 				<div class="panel-body" >
-                    <div class="row">
-                        @foreach($listkuis as $key => $kuis)
-                            <div class="col-md-6">
-                                <div class="panel-kuis">
-                                    <p>{{$key + 1}}. {{ $kuis->pertanyaan}}</p>
+                    <form action="{{ route('kuis.mahasiswa.hitung') }}">
+                        <div class="row">
+                            {{ csrf_field() }}
+                            @foreach($listkuis as $key => $kuis)
+                                <div class="col-md-12">
+                                    <div class="panel-kuis">
+                                        <p>{{$key + 1}}. {{ $kuis->pertanyaan}}</p>
+                                    </div>
+                                    <div class="panel-jawaban">
+                                        <ul class="list-jawaban">
+                                            <?php $letter = 'A'; ?>
+                                            @foreach($kuis->kuisJawaban as $jawaban)
+                                                <?php 
+                                                    $jawaban[$letter] = $jawaban;
+                                                    ?>
+                                                <div class="radio">
+                                                    {{ $letter }} . <label><input type="radio" name="jawaban[]" value="{{ $jawaban->value }}"> {{ $jawaban->value }}</label>
+                                                </div>
+                                                    <?php $letter++; ?>
+                                            @endforeach
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div class="panel-jawaban">
-                                    <ul class="list-jawaban">
-                                        @foreach($listkuis->kuisJawaban as $jawaban)
-                                            <li>{{ $jawaban->value }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
+                        @if($listkuis->nextPageUrl())
+                            <a href="{{ $listkuis->nextPageUrl() }}" class="btn btn-success btn-sm pull-right"><i class="fa fa-arrow-circle-right"></i> Berikutnya</a>
+                        @endif
+                    </form>
 				</div>
 			</div>
 		</div>

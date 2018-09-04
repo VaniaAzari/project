@@ -158,6 +158,7 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 																Route::group(['prefix' => 'kuis'], function () {
 																	Route::get('/','KuisController@indexKuisMahasiswa')->name('kuis.mahasiswa');
 																	Route::get('/soal/{id}','KuisController@indexKuisSoalMahasiswa')->name('kuis.mahasiswa.soal');
+																	Route::post('/hitung','KuisController@hitungJawaban')->name('kuis.mahasiswa.hitung');
 																});
 
 															Route::get('/homemahasiswa', 'HomeMahasiswaController@hitungmahasiswa');

@@ -158,8 +158,13 @@ class KuisController extends Controller
     {
         $list = Kuis::where('group_kuis_id', $id)->with(array('kuisJawaban'=>function($query){
             $query->select('id','value','ket','kuis_id');
-        }))->get();
+        }))->paginate(1);
         return view('KuisMahasiswa.indexkuis')
             ->with('listkuis', $list);
+    }
+
+    public function hitungJawaban(Request $request)
+    {
+        dd($request->all());
     }
 }
