@@ -9,6 +9,7 @@ use App\Kuis;
 use App\KuisJawaban;
 use App\Matakuliah;
 use Yajra\Datatables\Datatables;
+use Auth;
 
 class KuisController extends Controller
 {
@@ -144,5 +145,21 @@ class KuisController extends Controller
 
         return $kuis ? response()->json(['message' => 'Kuis Berhasil Di Hapus'], 200)
                           : response()->json(['message' => 'Kuis Gagal Di Hapus'], 400);
+    }
+
+    public function indexKuisMahasiswa(GroupKuis $groupKuis)
+    {
+        $listKuis = GroupKuis::where('id_kelas', Auth::user()->kelas_id)->get();
+        return view('KuisMahasiswa.index')
+            ->with('listkuis',$listKuis);
+    }
+
+    public function indexKuisSoalMahasiswa(Kuis $kuis, $id)
+    {
+        $list = Kuis::where('group_kuis_id', $id)->with(array('kuisJawaban'=>function($query){
+            $query->select('id','value','ket','kuis_id');
+        }))->get();
+        return view('KuisMahasiswa.indexkuis')
+            ->with('listkuis', $list);
     }
 }

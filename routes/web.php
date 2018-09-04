@@ -155,6 +155,11 @@ Route::group(['prefix'=>'matakuliahkelas'],function(){
 
 															Route::group(['middleware' => 'auth:mahasiswa'], function(){
 
+																Route::group(['prefix' => 'kuis'], function () {
+																	Route::get('/','KuisController@indexKuisMahasiswa')->name('kuis.mahasiswa');
+																	Route::get('/soal/{id}','KuisController@indexKuisSoalMahasiswa')->name('kuis.mahasiswa.soal');
+																});
+
 															Route::get('/homemahasiswa', 'HomeMahasiswaController@hitungmahasiswa');
 															Route::get('caribahan', 'DownloadController@search');
 															Route::get('viewAlldownloadfile/{matakuliah_id}/{kelas_id}','DownloadController@downfunc');

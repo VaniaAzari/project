@@ -140,7 +140,7 @@ staffid : "991234"
                          <!--    <li><a href="{{ URL::to('viewAlldownloadfile') }}">Bahan Ajar</a></li> -->
                          <li><a href="{{ URL::to('/bahanajar') }}">Bahan Ajar</a></li>
                             <li><a href="{{ URL::to('/bahanajartugas') }}">Tugas</a></li>
-                            <li><a href="{{ URL::to('/kuis') }}">Kuis</a></li>
+                            <li><a href="{{ route('kuis.mahasiswa') }}">Kuis</a></li>
                           
                             
 
