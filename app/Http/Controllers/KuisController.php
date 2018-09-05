@@ -10,6 +10,7 @@ use App\KuisJawaban;
 use App\Matakuliah;
 use Yajra\Datatables\Datatables;
 use Auth;
+use Session;
 
 class KuisController extends Controller
 {
@@ -154,17 +155,58 @@ class KuisController extends Controller
             ->with('listkuis',$listKuis);
     }
 
-    public function indexKuisSoalMahasiswa(Kuis $kuis, $id)
+    public function indexKuisSoalMahasiswa(Request $request,Kuis $kuis, $id)
     {
         $list = Kuis::where('group_kuis_id', $id)->with(array('kuisJawaban'=>function($query){
             $query->select('id','value','ket','kuis_id');
-        }))->paginate(1);
+        }))->get();
+        $key = count($list);
+        $currentKey = $request->session()->get('currentKey');
+        if(!$currentKey)
+        {
+            $arrayKey = 0;
+        } else {
+            $arrayKey = $currentKey;
+        }
+        if($key === $currentKey)
+        {
+            return view('KuisMahasiswa.indexselesai')
+                ->with('correct',$request->session()->get('correct'))
+                ->with('wrong',$request->session()->get('wrong'));
+        }
         return view('KuisMahasiswa.indexkuis')
-            ->with('listkuis', $list);
+            ->with('listkuis', $list[$arrayKey]);
     }
 
-    public function hitungJawaban(Request $request)
+    public function hitungJawaban(Request $request, KuisJawaban $kuisJawaban)
     {
-        dd($request->all());
+        $getCorrect = $request->session()->get('correct');
+        $getWrong = $request->session()->get('wrong');
+        if(!$getCorrect)
+        {
+            $getCorrect = 0;
+        }
+        if(!$getWrong)
+        {
+            $getWrong = 0;
+        }
+        $checkAnswer = KuisJawaban::where('kuis_id', $request->id)
+            ->where('value', $request->jawaban)->first();
+        if($checkAnswer->ket == 1) {
+            $nowCorrect = $getCorrect + 1;
+            $request->session()->put('correct', $nowCorrect);
+        } else {
+            $nowWrong = $getWrong + 1;
+            $request->session()->put('wrong', $nowWrong);
+        }
+        $checkSession = $request->session()->get('currentKey');
+        if(!$checkSession)
+        {
+            $request->session()->put('currentKey', 1);
+        } else {
+            $request->session()->put('currentKey', $checkSession + 1);
+        }
+
+        return redirect()->route('kuis.mahasiswa.soal',['id' => $request->group_id]);
     }
 }

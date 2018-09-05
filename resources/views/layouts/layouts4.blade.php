@@ -106,7 +106,11 @@ staffid : "991234"
 }
 });
 </script>
-
+{!!Html::script('assets/js/jquery-1.11.1.js')!!}
+ {!!Html::script('assets/js/bootstrap.js')!!}
+<script src="{{ asset('assets/js/sweetalert.min.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/js/smoke.min.js') }}"></script>
 </head>
 <body>
     <header>
@@ -181,7 +185,5 @@ staffid : "991234"
     <!-- FOOTER SECTION END-->
     <!-- JAVASCRIPT AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
     <!-- CORE JQUERY SCRIPTS -->
- {!!Html::script('assets/js/jquery-1.11.1.js')!!}
- {!!Html::script('assets/js/bootstrap.js')!!}
 </body>
 </html>

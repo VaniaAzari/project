@@ -9,38 +9,45 @@
 				<br>
 							
 				<div class="panel-body" >
-                    <form action="{{ route('kuis.mahasiswa.hitung') }}">
+                    <form action="{{ route('kuis.mahasiswa.hitung') }}" id="form-kuis" method="POST">
+                        <input type="hidden" name="group_id" value="{{ $listkuis->group_kuis_id }}">
+                        <input type="hidden" name="id" value="{{ $listkuis->id }}">
                         <div class="row">
                             {{ csrf_field() }}
-                            @foreach($listkuis as $key => $kuis)
-                                <div class="col-md-12">
-                                    <div class="panel-kuis">
-                                        <p>{{$key + 1}}. {{ $kuis->pertanyaan}}</p>
-                                    </div>
-                                    <div class="panel-jawaban">
-                                        <ul class="list-jawaban">
-                                            <?php $letter = 'A'; ?>
-                                            @foreach($kuis->kuisJawaban as $jawaban)
-                                                <?php 
-                                                    $jawaban[$letter] = $jawaban;
-                                                    ?>
-                                                <div class="radio">
-                                                    {{ $letter }} . <label><input type="radio" name="jawaban[]" value="{{ $jawaban->value }}"> {{ $jawaban->value }}</label>
-                                                </div>
-                                                    <?php $letter++; ?>
-                                            @endforeach
-                                        </ul>
-                                    </div>
+                            <div class="col-md-12">
+                                <div class="panel-kuis">
+                                    <p>{{ $listkuis->pertanyaan}}</p>
                                 </div>
-                            @endforeach
+                                <div class="panel-jawaban">
+                                    <ul class="list-jawaban">
+                                        <?php $letter = 'A'; ?>
+                                        @foreach($listkuis->kuisJawaban as $jawaban)
+                                            <?php 
+                                                $jawaban[$letter] = $jawaban;
+                                                ?>
+                                            <div class="radio">
+                                                {{ $letter }} . <label><input type="radio" name="jawaban" value="{{ $jawaban->value }}"> {{ $jawaban->value }}</label>
+                                            </div>
+                                                <?php $letter++; ?>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        @if($listkuis->nextPageUrl())
-                            <a href="{{ $listkuis->nextPageUrl() }}" class="btn btn-success btn-sm pull-right"><i class="fa fa-arrow-circle-right"></i> Berikutnya</a>
-                        @endif
+                       <button type="submit" class="btn btn-info">Jawab</button>
                     </form>
 				</div>
 			</div>
 		</div>
 	</div>	
 </section>
+<script>
+    $( document ).ready(function() {
+		$( ".next-button" ).click(function(e) {
+            e.preventDefault()
+            $('#form-kuis').submit();
+        });
+	});
+	
+</script>
 @endsection
